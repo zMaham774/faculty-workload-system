@@ -1,0 +1,13 @@
+# Local DB credentials — never push this
+App.config
+
+# Visual Studio build output
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# Log files generated at runtime
+Resources/logs/
+Resources/reports/

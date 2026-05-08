@@ -1,0 +1,129 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|c:\\users\\talha khan\\source\\repos\\facultyworkloadsystem\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|solutionrelative:app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|c:\\users\\talha khan\\source\\repos\\facultyworkloadsystem\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|c:\\users\\talha khan\\source\\repos\\facultyworkloadsystem\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|c:\\users\\talha khan\\source\\repos\\facultyworkloadsystem\\helpers\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|solutionrelative:helpers\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|c:\\users\\talha khan\\source\\repos\\facultyworkloadsystem\\helpers\\logmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|solutionrelative:helpers\\logmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|c:\\users\\talha khan\\source\\repos\\facultyworkloadsystem\\app.config.example||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{3F1C58B8-9B90-4F67-B707-5477BAFA45E8}|FacultyWorkloadSystem.csproj|solutionrelative:app.config.example||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAqwCEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T12:49:30.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LogManager.cs",
+              "DocumentMoniker": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\Helpers\\LogManager.cs",
+              "RelativeDocumentMoniker": "Helpers\\LogManager.cs",
+              "ToolTip": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\Helpers\\LogManager.cs",
+              "RelativeToolTip": "Helpers\\LogManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T12:48:15.692Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DatabaseHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\Helpers\\DatabaseHelper.cs",
+              "RelativeDocumentMoniker": "Helpers\\DatabaseHelper.cs",
+              "ToolTip": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\Helpers\\DatabaseHelper.cs",
+              "RelativeToolTip": "Helpers\\DatabaseHelper.cs",
+              "ViewState": "AgIAAFsAAACQZmZmZmYkwHEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T12:44:37.419Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\App.config",
+              "RelativeDocumentMoniker": "App.config",
+              "ToolTip": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\App.config",
+              "RelativeToolTip": "App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-05-08T12:39:42.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "App.config.example",
+              "DocumentMoniker": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\App.config.example",
+              "RelativeDocumentMoniker": "App.config.example",
+              "ToolTip": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\App.config.example",
+              "RelativeToolTip": "App.config.example",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-08T12:32:28.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\Talha Khan\\source\\repos\\FacultyWorkloadSystem\\Form1.cs [Design]",
+              "RelativeToolTip": "Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T11:56:50.695Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

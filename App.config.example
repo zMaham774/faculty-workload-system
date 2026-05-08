@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<connectionStrings>
+		<add name="FacultyDB"
+			 connectionString="Server=localhost;
+                           Database=faculty_workload_db;
+                           Uid=YOUR_USERNAME;
+                           Pwd=YOUR_PASSWORD;"
+			 providerName="MySql.Data.MySqlClient"/>
+	</connectionStrings>
+	<startup>
+		<supportedRuntime version="v4.0"
+						  sku=".NETFramework,Version=v4.8"/>
+	</startup>
+</configuration>
