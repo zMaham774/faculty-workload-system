@@ -1,0 +1,19 @@
+# VS
+.vs/
+
+# Build output
+bin/
+obj/
+
+# Local DB credentials — never push this
+App.config
+
+# Log and reports
+Resources/logs/
+Resources/reports/
+
+# VS files
+*.user
+*.suo
+*.dtbcache
+*.dtbcache.v2
