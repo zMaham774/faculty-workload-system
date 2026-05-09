@@ -30,6 +30,7 @@
         {
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.chkShowPassword = new System.Windows.Forms.CheckBox();
             this.loginTextbox2 = new FacultyWorkloadSystem.Helpers.loginTextbox();
             this.loginTextbox1 = new FacultyWorkloadSystem.Helpers.loginTextbox();
             this.gradientPanel1 = new FacultyWorkloadSystem.Helpers.GradientPanel();
@@ -57,15 +58,30 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(145)))), ((int)(((byte)(245)))));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(642, 424);
+            this.button1.Location = new System.Drawing.Point(642, 453);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(355, 54);
             this.button1.TabIndex = 6;
             this.button1.Text = "LogIn";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // chkShowPassword
+            // 
+            this.chkShowPassword.AutoSize = true;
+            this.chkShowPassword.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.chkShowPassword.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkShowPassword.Location = new System.Drawing.Point(642, 365);
+            this.chkShowPassword.Name = "chkShowPassword";
+            this.chkShowPassword.Size = new System.Drawing.Size(145, 25);
+            this.chkShowPassword.TabIndex = 7;
+            this.chkShowPassword.Text = "Show Password";
+            this.chkShowPassword.UseVisualStyleBackColor = true;
+            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
             // 
             // loginTextbox2
             // 
@@ -156,6 +172,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1142, 612);
+            this.Controls.Add(this.chkShowPassword);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.loginTextbox2);
             this.Controls.Add(this.loginTextbox1);
@@ -185,5 +202,6 @@
         private Helpers.loginTextbox loginTextbox1;
         private Helpers.loginTextbox loginTextbox2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chkShowPassword;
     }
 }
