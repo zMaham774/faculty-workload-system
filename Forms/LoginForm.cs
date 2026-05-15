@@ -56,7 +56,10 @@ namespace FacultyWorkloadSystem.Forms
                 // Log it
                 LogManager.LogInfo($"User '{username}' logged in " + $"with role '{SessionManager.Role}'");
                 // Temporary success message
-                MessageBox.Show("Login Successful!\n\n" +"Welcome:  " + SessionManager.Username +"\nRole:    " + SessionManager.Role,"Success",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DashboardForm dashboard = new DashboardForm();
+                dashboard.Show();
+                this.Hide();
+
             }
             catch (Exception ex)
             {
