@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace FacultyWorkloadSystem.Forms
 {
@@ -25,12 +26,18 @@ namespace FacultyWorkloadSystem.Forms
         private void DashboardForm_Load(
             object sender, EventArgs e)
         {
+            // Purana code jahan icons set ho rahe hain...
             try
             {
-                picLogo.Image =
-                    Properties.Resources.Uet_logo;
+                SetNavIcon(picDashboard, Properties.Resources.ic_dashboard, btnDashboard, 6);
+                // ... baqi saaray SetNavIcon calls ...
+                SetNavIcon(picLogout, Properties.Resources.ic_logout, btnLogout, 2);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Yeh line aapko bataye gi agar kisi icon ka naam galat likha hua hai
+                MessageBox.Show("Icon Loading Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             lblAvatar.Text =
                 GetInitials(SessionManager.Username);
@@ -55,6 +62,54 @@ namespace FacultyWorkloadSystem.Forms
             LoadTodaySchedule();
             LoadPendingLeaves();
             LoadUpcomingEvents();
+
+            // Icons set karo — resources se
+            try
+            {
+                SetNavIcon(picDashboard,
+                    Properties.Resources.ic_dashboard,
+                    btnDashboard, 6);
+                SetNavIcon(picFaculty,
+                    Properties.Resources.ic_faculty,
+                    btnFaculty, 50);
+                SetNavIcon(picDepts,
+                    Properties.Resources.ic_department,
+                    btnDepts, 94);
+                SetNavIcon(picCourses,
+                    Properties.Resources.ic_courses,
+                    btnCourses, 138);
+                SetNavIcon(picWorkload,
+                    Properties.Resources.ic_workload,
+                    btnWorkload, 182);
+                SetNavIcon(picTimetable,
+                    Properties.Resources.ic_timetable,
+                    btnTimetable, 226);
+                SetNavIcon(picAttendance,
+                    Properties.Resources.ic_attendance,
+                    btnAttendance, 270);
+                SetNavIcon(picLeave,
+                    Properties.Resources.ic_leave,
+                    btnLeave, 314);
+                SetNavIcon(picLeaveApp,
+                    Properties.Resources.ic_leaveapp,
+                    btnLeaveApp, 358);
+                SetNavIcon(picCalendar,
+                    Properties.Resources.ic_calender,
+                    btnCalendar, 402);
+                SetNavIcon(picReports,
+                    Properties.Resources.ic_reports,
+                    btnReports, 446);
+                SetNavIcon(picUsers,
+                    Properties.Resources.ic_user,
+                    btnUsers, 490);
+                SetNavIcon(picSemesters,
+                    Properties.Resources.ic_semester,
+                    btnSemesters, 534);
+                SetNavIcon(picLogout,
+                    Properties.Resources.ic_logout,
+                    btnLogout, 2);
+            }
+            catch { }
         }
 
         // ── Stats from DB ──────────────────────────────
@@ -519,5 +574,30 @@ namespace FacultyWorkloadSystem.Forms
                     this.Width / 2 - 140,
                     this.Height - 160, 260, 260);
         }
+
+        private void SetNavIcon(
+         System.Windows.Forms.PictureBox pic,
+         System.Drawing.Image img,
+         System.Windows.Forms.Button btn,
+         int yPos)
+        {
+            if (img == null) return; // Agar resource name galat ho to crash na ho
+
+            pic.Image = img;
+            pic.Size = new Size(18, 18);
+
+            // Position ko button ke mutabiq center mein set karein
+            pic.Location = new Point(14, (btn.Height - pic.Height) / 2);
+            pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            pic.BackColor = Color.Transparent;
+
+            // CRITICAL CHANGE: PictureBox ko panel mein daalne ke bajaye DIRECT BUTTON ke andar add karein
+            btn.Controls.Add(pic);
+
+            // PictureBox ko button ke background se upar layein
+            pic.BringToFront();
+
+            btn.Padding = new System.Windows.Forms.Padding(36, 0, 0, 0);
+        }
     }
-}
+    }
