@@ -26,16 +26,22 @@ namespace FacultyWorkloadSystem.Forms
         private void DashboardForm_Load(
             object sender, EventArgs e)
         {
-            // Purana code jahan icons set ho rahe hain...
+            try
+            {
+                picLogo.Image =
+                    FacultyWorkloadSystem.Properties
+                    .Resources.Uet_logo;
+            }
+            catch { }
             try
             {
                 SetNavIcon(picDashboard, Properties.Resources.ic_dashboard, btnDashboard, 6);
-                // ... baqi saaray SetNavIcon calls ...
+             
                 SetNavIcon(picLogout, Properties.Resources.ic_logout, btnLogout, 2);
             }
             catch (Exception ex)
             {
-                // Yeh line aapko bataye gi agar kisi icon ka naam galat likha hua hai
+ 
                 MessageBox.Show("Icon Loading Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -63,7 +69,7 @@ namespace FacultyWorkloadSystem.Forms
             LoadPendingLeaves();
             LoadUpcomingEvents();
 
-            // Icons set karo — resources se
+       
             try
             {
                 SetNavIcon(picDashboard,
@@ -581,20 +587,19 @@ namespace FacultyWorkloadSystem.Forms
          System.Windows.Forms.Button btn,
          int yPos)
         {
-            if (img == null) return; // Agar resource name galat ho to crash na ho
+            if (img == null) return; 
 
             pic.Image = img;
             pic.Size = new Size(18, 18);
 
-            // Position ko button ke mutabiq center mein set karein
             pic.Location = new Point(14, (btn.Height - pic.Height) / 2);
             pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             pic.BackColor = Color.Transparent;
 
-            // CRITICAL CHANGE: PictureBox ko panel mein daalne ke bajaye DIRECT BUTTON ke andar add karein
+           
             btn.Controls.Add(pic);
 
-            // PictureBox ko button ke background se upar layein
+         
             pic.BringToFront();
 
             btn.Padding = new System.Windows.Forms.Padding(36, 0, 0, 0);
