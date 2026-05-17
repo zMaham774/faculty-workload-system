@@ -442,6 +442,11 @@ namespace FacultyWorkloadSystem.Forms
             this.Hide();
             deptForm.ShowDialog();
             this.Show();
+       
+        {
+            DepartmentForm form = new DepartmentForm();
+            form.ShowDialog();
+        }
         }
 
         private void btnCourses_Click(
@@ -605,5 +610,7 @@ namespace FacultyWorkloadSystem.Forms
 
             btn.Padding = new System.Windows.Forms.Padding(36, 0, 0, 0);
         }
+
+
     }
     }
