@@ -436,12 +436,13 @@ namespace FacultyWorkloadSystem.Forms
                 "Info", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
-        private void btnDepts_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show(
-                "Departments — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        private void btnDepts_Click(object sender, EventArgs e)
+        {
+            DepartmentForm deptForm = new DepartmentForm();
+            this.Hide();
+            deptForm.ShowDialog();
+            this.Show();
+        }
 
         private void btnCourses_Click(
             object s, EventArgs e) =>

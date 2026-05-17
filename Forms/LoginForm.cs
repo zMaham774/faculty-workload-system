@@ -73,6 +73,11 @@ namespace FacultyWorkloadSystem.Forms
             // If unchecked, isPassword becomes true (hides text)
             loginTextbox2.isPassword = !chkShowPassword.Checked;
         }
+
+        private void btnFormClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
 
