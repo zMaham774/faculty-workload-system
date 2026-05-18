@@ -42,6 +42,40 @@ namespace FacultyWorkloadSystem.DAL
             return list;
         }
 
+        // ── Get All with Faculty Count ─────────────────
+        public static DataTable GetAllWithFacultyCount()
+        {
+            string sql = @"
+                SELECT   d.designation_id,
+                         d.designation_name,
+                         d.rank_order,
+                         COUNT(f.emp_id)
+                             AS faculty_count
+                FROM     designations d
+                LEFT JOIN faculty f
+                       ON d.designation_id =
+                          f.designation_id
+                GROUP BY d.designation_id,
+                         d.designation_name,
+                         d.rank_order
+                ORDER BY d.rank_order ASC,
+                         d.designation_name ASC";
+
+            return DatabaseHelper.ExecuteQuery(sql);
+        }
+
+        // ── Get All for ComboBox ───────────────────────
+        public static DataTable GetAllForCombo()
+        {
+            string sql = @"
+                SELECT designation_id,
+                       designation_name
+                FROM   designations
+                ORDER  BY rank_order ASC";
+
+            return DatabaseHelper.ExecuteQuery(sql);
+        }
+
         // ── Get By Id ─────────────────────────────────
         public static Designation GetById(int id)
         {
@@ -137,7 +171,7 @@ namespace FacultyWorkloadSystem.DAL
                 .ExecuteNonQuery(sql, p) > 0;
         }
 
-        // ── Name Exists (for duplicate check) ─────────
+        // ── Name Exists ───────────────────────────────
         public static bool NameExists(
             string name, int excludeId = 0)
         {
@@ -158,8 +192,9 @@ namespace FacultyWorkloadSystem.DAL
             return Convert.ToInt32(result) > 0;
         }
 
-        // ── Has Faculty (prevent delete) ──────────────
-        public static bool HasFaculty(int id)
+        // ── Get Faculty Count ─────────────────────────
+        public static int GetFacultyCount(
+            int designationId)
         {
             string sql = @"
                 SELECT COUNT(*)
@@ -168,12 +203,19 @@ namespace FacultyWorkloadSystem.DAL
 
             var p = new[]
             {
-                new MySqlParameter("@id", id)
+                new MySqlParameter(
+                    "@id", designationId)
             };
 
             object result =
                 DatabaseHelper.ExecuteScalar(sql, p);
-            return Convert.ToInt32(result) > 0;
+            return Convert.ToInt32(result);
+        }
+
+        // ── Has Faculty (reuses GetFacultyCount) ──────
+        public static bool HasFaculty(int id)
+        {
+            return GetFacultyCount(id) > 0;
         }
 
         // ── Search ────────────────────────────────────
@@ -215,18 +257,6 @@ namespace FacultyWorkloadSystem.DAL
                 });
             }
             return list;
-        }
-
-        // ── Get All for ComboBox ───────────────────────
-        public static DataTable GetAllForCombo()
-        {
-            string sql = @"
-                SELECT designation_id,
-                       designation_name
-                FROM   designations
-                ORDER  BY rank_order ASC";
-
-            return DatabaseHelper.ExecuteQuery(sql);
         }
     }
 }

@@ -32,6 +32,31 @@ namespace FacultyWorkloadSystem.Forms
         {
             dgvDepartments.Columns.Clear();
 
+            dgvDepartments.EnableHeadersVisualStyles = false;
+
+            dgvDepartments.ColumnHeadersDefaultCellStyle.BackColor
+                = Color.FromArgb(9, 74, 158);
+            dgvDepartments.ColumnHeadersDefaultCellStyle.ForeColor
+                = Color.White;
+            dgvDepartments.ColumnHeadersDefaultCellStyle.Font
+                = new Font("Segoe UI", 9f, FontStyle.Bold);
+            dgvDepartments.ColumnHeadersDefaultCellStyle.Padding
+                = new Padding(5, 0, 0, 0);
+
+            dgvDepartments.ColumnHeadersHeight = 36;
+            dgvDepartments.ColumnHeadersHeightSizeMode
+                = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+            // Alternating row colours
+            dgvDepartments.AlternatingRowsDefaultCellStyle.BackColor
+                = Color.FromArgb(240, 248, 255);
+
+            // Row height
+            dgvDepartments.RowTemplate.Height = 32;
+
+            // Grid line colour
+            dgvDepartments.GridColor
+                = Color.FromArgb(220, 230, 242);
             dgvDepartments.Columns.Add(
                 new DataGridViewTextBoxColumn
                 {

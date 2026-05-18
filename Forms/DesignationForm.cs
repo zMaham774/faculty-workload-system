@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using FacultyWorkloadSystem.DAL;
@@ -21,7 +22,7 @@ namespace FacultyWorkloadSystem.Forms
         }
 
         // ══════════════════════════════════════════════
-        //  LOAD
+        //  FORM LOAD
         // ══════════════════════════════════════════════
         private void DesignationForm_Load(
             object sender, EventArgs e)
@@ -37,6 +38,41 @@ namespace FacultyWorkloadSystem.Forms
         {
             dgvDesignations.Columns.Clear();
 
+            // Force header style
+            dgvDesignations
+                .EnableHeadersVisualStyles = false;
+
+            dgvDesignations
+                .ColumnHeadersDefaultCellStyle
+                .BackColor =
+                    Color.FromArgb(9, 74, 158);
+            dgvDesignations
+                .ColumnHeadersDefaultCellStyle
+                .ForeColor = Color.White;
+            dgvDesignations
+                .ColumnHeadersDefaultCellStyle
+                .Font =
+                    new Font("Segoe UI", 9f,
+                             FontStyle.Bold);
+            dgvDesignations
+                .ColumnHeadersHeight = 36;
+            dgvDesignations
+                .ColumnHeadersHeightSizeMode =
+                DataGridViewColumnHeadersHeightSizeMode
+                .DisableResizing;
+
+            dgvDesignations
+                .AlternatingRowsDefaultCellStyle
+                .BackColor =
+                    Color.FromArgb(240, 248, 255);
+
+            dgvDesignations
+                .RowTemplate.Height = 32;
+
+            dgvDesignations.GridColor =
+                Color.FromArgb(220, 230, 242);
+
+            // ── Columns ───────────────────────────────
             dgvDesignations.Columns.Add(
                 new DataGridViewTextBoxColumn
                 {
@@ -51,7 +87,7 @@ namespace FacultyWorkloadSystem.Forms
                 {
                     Name = "colName",
                     HeaderText = "Designation Name",
-                    Width = 300,
+                    Width = 260,
                     ReadOnly = true
                 });
 
@@ -60,7 +96,7 @@ namespace FacultyWorkloadSystem.Forms
                 {
                     Name = "colRank",
                     HeaderText = "Rank Order",
-                    Width = 120,
+                    Width = 100,
                     ReadOnly = true
                 });
 
@@ -79,7 +115,8 @@ namespace FacultyWorkloadSystem.Forms
                     Name = "colEdit",
                     HeaderText = "Edit",
                     Text = "✏ Edit",
-                    UseColumnTextForButtonValue = true,
+                    UseColumnTextForButtonValue
+                                 = true,
                     Width = 90,
                     FlatStyle = FlatStyle.Flat,
                     DefaultCellStyle =
@@ -97,7 +134,8 @@ namespace FacultyWorkloadSystem.Forms
                     Name = "colDelete",
                     HeaderText = "Delete",
                     Text = "🗑 Delete",
-                    UseColumnTextForButtonValue = true,
+                    UseColumnTextForButtonValue
+                                 = true,
                     Width = 90,
                     FlatStyle = FlatStyle.Flat,
                     DefaultCellStyle =
@@ -111,16 +149,32 @@ namespace FacultyWorkloadSystem.Forms
         }
 
         // ══════════════════════════════════════════════
-        //  LOAD DATA
+        //  LOAD DATA — single query with faculty count
         // ══════════════════════════════════════════════
         private void LoadDesignations()
         {
             try
             {
-                List<Designation> list =
-                    DesignationDAL.GetAll();
-                PopulateGrid(list);
-                UpdateSummary(list.Count);
+                DataTable dt =
+                    DesignationDAL
+                    .GetAllWithFacultyCount();
+
+                dgvDesignations.Rows.Clear();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    dgvDesignations.Rows.Add(
+                        row["designation_id"],
+                        row["designation_name"],
+                        row["rank_order"],
+                        row["faculty_count"]
+                            + " faculty"
+                    );
+                }
+
+                lblSummary.Text =
+                    "Total Designations: "
+                    + dt.Rows.Count;
             }
             catch (Exception ex)
             {
@@ -128,46 +182,6 @@ namespace FacultyWorkloadSystem.Forms
                 ValidationHelper.ShowError(
                     "Failed to load designations.");
             }
-        }
-
-        private void PopulateGrid(
-            List<Designation> list)
-        {
-            dgvDesignations.Rows.Clear();
-            foreach (Designation d in list)
-            {
-                // Faculty count per designation
-                int fc = 0;
-                try
-                {
-                    fc = GetFacultyCount(
-                        d.DesignationId);
-                }
-                catch { }
-
-                dgvDesignations.Rows.Add(
-                    d.DesignationId,
-                    d.DesignationName,
-                    d.RankOrder,
-                    fc + " faculty");
-            }
-        }
-
-        private int GetFacultyCount(int id)
-        {
-            // Uses DAL to count faculty
-            // HasFaculty just returns bool so
-            // we use a simple check here
-            return DesignationDAL
-                .HasFaculty(id) ? 1 : 0;
-            // Note: Replace with actual count
-            // query when needed
-        }
-
-        private void UpdateSummary(int count)
-        {
-            lblSummary.Text =
-                "Total Designations: " + count;
         }
 
         // ══════════════════════════════════════════════
@@ -192,6 +206,7 @@ namespace FacultyWorkloadSystem.Forms
                 if (_isEditMode)
                 {
                     d.DesignationId = _editingId;
+
                     if (DesignationDAL.Update(d))
                     {
                         ValidationHelper.ShowSuccess(
@@ -337,8 +352,8 @@ namespace FacultyWorkloadSystem.Forms
             {
                 ValidationHelper.ShowError(
                     "Cannot delete this designation.\n" +
-                    "Faculty members are assigned to " +
-                    "it.\nPlease reassign them first.");
+                    "Faculty members are assigned " +
+                    "to it.\nPlease reassign them first.");
                 return;
             }
 
@@ -373,6 +388,7 @@ namespace FacultyWorkloadSystem.Forms
             object sender, EventArgs e)
         {
             string kw = txtSearch.Text.Trim();
+
             if (ValidationHelper.IsEmpty(kw))
             {
                 ValidationHelper.ShowError(
@@ -392,8 +408,26 @@ namespace FacultyWorkloadSystem.Forms
                         "matching: " + kw);
                     return;
                 }
-                PopulateGrid(results);
-                UpdateSummary(results.Count);
+
+                dgvDesignations.Rows.Clear();
+
+                foreach (Designation d in results)
+                {
+                    int fc = DesignationDAL
+                        .GetFacultyCount(
+                            d.DesignationId);
+
+                    dgvDesignations.Rows.Add(
+                        d.DesignationId,
+                        d.DesignationName,
+                        d.RankOrder,
+                        fc + " faculty"
+                    );
+                }
+
+                lblSummary.Text =
+                    "Showing: " + results.Count
+                    + " result(s)";
             }
             catch (Exception ex)
             {
@@ -459,7 +493,16 @@ namespace FacultyWorkloadSystem.Forms
         }
 
         // ══════════════════════════════════════════════
-        //  DRAG — 
+        //  CLOSE BUTTON ON GRADIENT PANEL
+        // ══════════════════════════════════════════════
+        private void btnFormClose_Click(
+            object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        // ══════════════════════════════════════════════
+        //  DRAG
         // ══════════════════════════════════════════════
         private void gradientPanel1_MouseDown(
             object sender, MouseEventArgs e)

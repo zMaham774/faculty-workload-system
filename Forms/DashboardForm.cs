@@ -36,12 +36,12 @@ namespace FacultyWorkloadSystem.Forms
             try
             {
                 SetNavIcon(picDashboard, Properties.Resources.ic_dashboard, btnDashboard, 6);
-             
+
                 SetNavIcon(picLogout, Properties.Resources.ic_logout, btnLogout, 2);
             }
             catch (Exception ex)
             {
- 
+
                 MessageBox.Show("Icon Loading Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -69,7 +69,7 @@ namespace FacultyWorkloadSystem.Forms
             LoadPendingLeaves();
             LoadUpcomingEvents();
 
-       
+
             try
             {
                 SetNavIcon(picDashboard,
@@ -273,7 +273,8 @@ namespace FacultyWorkloadSystem.Forms
                                 220, 235, 255)
                     };
                     string ic = ini;
-                    av.Paint += (s, ev) => {
+                    av.Paint += (s, ev) =>
+                    {
                         ev.Graphics.SmoothingMode =
                             SmoothingMode.AntiAlias;
                         ev.Graphics.FillEllipse(
@@ -442,11 +443,6 @@ namespace FacultyWorkloadSystem.Forms
             this.Hide();
             deptForm.ShowDialog();
             this.Show();
-       
-        {
-            DepartmentForm form = new DepartmentForm();
-            form.ShowDialog();
-        }
         }
 
         private void btnCourses_Click(
@@ -593,7 +589,7 @@ namespace FacultyWorkloadSystem.Forms
          System.Windows.Forms.Button btn,
          int yPos)
         {
-            if (img == null) return; 
+            if (img == null) return;
 
             pic.Image = img;
             pic.Size = new Size(18, 18);
@@ -602,10 +598,10 @@ namespace FacultyWorkloadSystem.Forms
             pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             pic.BackColor = Color.Transparent;
 
-           
+
             btn.Controls.Add(pic);
 
-         
+
             pic.BringToFront();
 
             btn.Padding = new System.Windows.Forms.Padding(36, 0, 0, 0);
@@ -613,4 +609,4 @@ namespace FacultyWorkloadSystem.Forms
 
 
     }
-    }
+}
