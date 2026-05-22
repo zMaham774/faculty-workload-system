@@ -98,6 +98,7 @@
     <Compile Include="DAL\DashboardDAL.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DAL\DesignationDAL.cs" />
+    <Compile Include="DAL\FacultyDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="Forms\DashboardForm.cs">
       <SubType>Form</SubType>
@@ -116,6 +117,12 @@
     </Compile>
     <Compile Include="Forms\DesignationForm.Designer.cs">
       <DependentUpon>DesignationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FacultyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FacultyForm.Designer.cs">
+      <DependentUpon>FacultyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -139,6 +146,7 @@
     <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Designation.cs" />
+    <Compile Include="Models\Faculty.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\DepartmentForm.resx">
@@ -146,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DesignationForm.resx">
       <DependentUpon>DesignationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FacultyForm.resx">
+      <DependentUpon>FacultyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

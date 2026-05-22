@@ -28,8 +28,6 @@
             this.menuRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.sep2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.gradientPanel1 = new FacultyWorkloadSystem.Helpers.GradientPanel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.pnlForm = new System.Windows.Forms.Panel();
             this.accentBar = new System.Windows.Forms.Panel();
             this.lblFormTitle = new System.Windows.Forms.Label();
@@ -48,13 +46,15 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnShowAll = new System.Windows.Forms.Button();
             this.dgvDesignations = new System.Windows.Forms.DataGridView();
+            this.gradientPanel1 = new FacultyWorkloadSystem.Helpers.GradientPanel();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
-            this.gradientPanel1.SuspendLayout();
             this.pnlForm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudRankOrder)).BeginInit();
             this.pnlSummary.SuspendLayout();
             this.pnlSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDesignations)).BeginInit();
+            this.gradientPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -67,7 +67,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(1000, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1340, 33);
             this.menuStrip1.TabIndex = 0;
             // 
             // fileMenu
@@ -89,67 +89,40 @@
             // menuMaximize
             // 
             this.menuMaximize.Name = "menuMaximize";
-            this.menuMaximize.Size = new System.Drawing.Size(270, 34);
+            this.menuMaximize.Size = new System.Drawing.Size(196, 34);
             this.menuMaximize.Text = "Maximize";
             this.menuMaximize.Click += new System.EventHandler(this.menuMaximize_Click);
             // 
             // menuMinimize
             // 
             this.menuMinimize.Name = "menuMinimize";
-            this.menuMinimize.Size = new System.Drawing.Size(270, 34);
+            this.menuMinimize.Size = new System.Drawing.Size(196, 34);
             this.menuMinimize.Text = "Minimize";
             this.menuMinimize.Click += new System.EventHandler(this.menuMinimize_Click);
             // 
             // sep1
             // 
             this.sep1.Name = "sep1";
-            this.sep1.Size = new System.Drawing.Size(267, 6);
+            this.sep1.Size = new System.Drawing.Size(193, 6);
             // 
             // menuRefresh
             // 
             this.menuRefresh.Name = "menuRefresh";
-            this.menuRefresh.Size = new System.Drawing.Size(270, 34);
+            this.menuRefresh.Size = new System.Drawing.Size(196, 34);
             this.menuRefresh.Text = "Refresh";
             this.menuRefresh.Click += new System.EventHandler(this.menuRefresh_Click);
             // 
             // sep2
             // 
             this.sep2.Name = "sep2";
-            this.sep2.Size = new System.Drawing.Size(267, 6);
+            this.sep2.Size = new System.Drawing.Size(193, 6);
             // 
             // menuClose
             // 
             this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(270, 34);
+            this.menuClose.Size = new System.Drawing.Size(196, 34);
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
-            // 
-            // gradientPanel1
-            // 
-            this.gradientPanel1.Controls.Add(this.lblTitle);
-            this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gradientPanel1.gradientBottom = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(145)))), ((int)(((byte)(245)))));
-            this.gradientPanel1.gradientTop = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            this.gradientPanel1.Location = new System.Drawing.Point(0, 33);
-            this.gradientPanel1.MaximumSize = new System.Drawing.Size(0, 60);
-            this.gradientPanel1.Name = "gradientPanel1";
-            this.gradientPanel1.Size = new System.Drawing.Size(1000, 60);
-            this.gradientPanel1.TabIndex = 1;
-            this.gradientPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseDown);
-            this.gradientPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseMove);
-            this.gradientPanel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseUp);
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(340, 12);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(418, 38);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "DESIGNATION MANAGEMENT";
             // 
             // pnlForm
             // 
@@ -167,7 +140,7 @@
             this.pnlForm.Controls.Add(this.btnClear);
             this.pnlForm.Location = new System.Drawing.Point(0, 96);
             this.pnlForm.Name = "pnlForm";
-            this.pnlForm.Size = new System.Drawing.Size(1000, 240);
+            this.pnlForm.Size = new System.Drawing.Size(1340, 240);
             this.pnlForm.TabIndex = 2;
             // 
             // accentBar
@@ -289,7 +262,7 @@
             this.pnlSummary.Controls.Add(this.lblSummary);
             this.pnlSummary.Location = new System.Drawing.Point(0, 336);
             this.pnlSummary.Name = "pnlSummary";
-            this.pnlSummary.Size = new System.Drawing.Size(1000, 38);
+            this.pnlSummary.Size = new System.Drawing.Size(1340, 38);
             this.pnlSummary.TabIndex = 3;
             // 
             // lblSummary
@@ -315,7 +288,7 @@
             this.pnlSearch.Controls.Add(this.btnShowAll);
             this.pnlSearch.Location = new System.Drawing.Point(0, 374);
             this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(1000, 48);
+            this.pnlSearch.Size = new System.Drawing.Size(1340, 48);
             this.pnlSearch.TabIndex = 4;
             // 
             // lblSearch
@@ -396,16 +369,43 @@
             this.dgvDesignations.RowHeadersWidth = 62;
             this.dgvDesignations.RowTemplate.Height = 28;
             this.dgvDesignations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDesignations.Size = new System.Drawing.Size(1000, 300);
+            this.dgvDesignations.Size = new System.Drawing.Size(1340, 343);
             this.dgvDesignations.TabIndex = 5;
             this.dgvDesignations.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDesignations_CellClick);
+            // 
+            // gradientPanel1
+            // 
+            this.gradientPanel1.Controls.Add(this.lblTitle);
+            this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gradientPanel1.gradientBottom = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(145)))), ((int)(((byte)(245)))));
+            this.gradientPanel1.gradientTop = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
+            this.gradientPanel1.Location = new System.Drawing.Point(0, 33);
+            this.gradientPanel1.MaximumSize = new System.Drawing.Size(0, 60);
+            this.gradientPanel1.Name = "gradientPanel1";
+            this.gradientPanel1.Size = new System.Drawing.Size(1340, 60);
+            this.gradientPanel1.TabIndex = 1;
+            this.gradientPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseDown);
+            this.gradientPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseMove);
+            this.gradientPanel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseUp);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(340, 12);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(418, 38);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "DESIGNATION MANAGEMENT";
             // 
             // DesignationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1000, 720);
+            this.ClientSize = new System.Drawing.Size(1340, 763);
             this.Controls.Add(this.dgvDesignations);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.pnlSummary);
@@ -419,8 +419,6 @@
             this.Load += new System.EventHandler(this.DesignationForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.gradientPanel1.ResumeLayout(false);
-            this.gradientPanel1.PerformLayout();
             this.pnlForm.ResumeLayout(false);
             this.pnlForm.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudRankOrder)).EndInit();
@@ -429,6 +427,8 @@
             this.pnlSearch.ResumeLayout(false);
             this.pnlSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDesignations)).EndInit();
+            this.gradientPanel1.ResumeLayout(false);
+            this.gradientPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

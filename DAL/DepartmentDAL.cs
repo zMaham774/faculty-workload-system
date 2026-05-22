@@ -212,5 +212,18 @@ namespace FacultyWorkloadSystem.DAL
                 Convert.ToBoolean(row["is_active"])
             );
         }
+
+        // Get All for ComboBox 
+        public static DataTable GetAllForCombo()
+        {
+            string sql = @"
+        SELECT dept_id,
+               dept_name
+        FROM   departments
+        WHERE  is_active = 1
+        ORDER  BY dept_name ASC";
+
+            return DatabaseHelper.ExecuteQuery(sql);
+        }
     }
 }

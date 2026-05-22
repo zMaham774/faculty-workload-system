@@ -431,11 +431,13 @@ namespace FacultyWorkloadSystem.Forms
         }
 
         // ── Nav Clicks ─────────────────────────────────
-        private void btnFaculty_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show("Faculty — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        private void btnFaculty_Click( object sender, EventArgs e)
+        {
+            FacultyForm facultyForm = new FacultyForm();
+            this.Hide();
+            facultyForm.ShowDialog();
+            this.Show();
+        }
 
         private void btnDepts_Click(object sender, EventArgs e)
         {
