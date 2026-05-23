@@ -225,5 +225,6 @@ namespace FacultyWorkloadSystem.DAL
 
             return DatabaseHelper.ExecuteQuery(sql);
         }
+     
     }
 }

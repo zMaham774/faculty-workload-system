@@ -448,10 +448,11 @@ namespace FacultyWorkloadSystem.Forms
         }
 
         private void btnCourses_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show("Courses — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+      object s, EventArgs e)
+        {
+            CourseForm form = new CourseForm();
+            form.ShowDialog();
+        }
 
         private void btnWorkload_Click(
             object s, EventArgs e) =>
