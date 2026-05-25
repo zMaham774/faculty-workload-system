@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using FacultyWorkloadSystem.DAL;
+﻿using FacultyWorkloadSystem.DAL;
 using FacultyWorkloadSystem.Helpers;
 using FacultyWorkloadSystem.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace FacultyWorkloadSystem.Forms
 {
@@ -24,6 +25,7 @@ namespace FacultyWorkloadSystem.Forms
         private void DepartmentForm_Load(object sender, EventArgs e)
         {
             SetupDataGridView();
+            LoadHodCombo();
             LoadDepartments();
         }
 
@@ -187,7 +189,13 @@ namespace FacultyWorkloadSystem.Forms
                 Department dept = new Department
                 {
                     DeptName = txtDeptName.Text.Trim(),
-                    HodName = txtHodName.Text.Trim(),
+
+                    // Get the display text (name) from combo
+                    // not the value (emp_id)
+                    HodName = cboHodName.SelectedIndex <= 0
+                ? ""
+                : cboHodName.Text.Trim(),
+
                     Contact = txtContact.Text.Trim(),
                     Email = txtEmail.Text.Trim(),
                     IsActive = rbActive.Checked
@@ -260,7 +268,7 @@ namespace FacultyWorkloadSystem.Forms
         private void ClearForm()
         {
             txtDeptName.Text = "";
-            txtHodName.Text = "";
+            cboHodName.SelectedIndex = 0;  
             txtContact.Text = "";
             txtEmail.Text = "";
             rbActive.Checked = true;
@@ -295,15 +303,30 @@ namespace FacultyWorkloadSystem.Forms
         {
             try
             {
-                Department dept = DepartmentDAL.GetById(deptId);
+                Department dept =
+                    DepartmentDAL.GetById(deptId);
                 if (dept == null) return;
 
                 txtDeptName.Text = dept.DeptName;
-                txtHodName.Text = dept.HodName;
                 txtContact.Text = dept.Contact;
                 txtEmail.Text = dept.Email;
                 rbActive.Checked = dept.IsActive;
                 rbInactive.Checked = !dept.IsActive;
+
+                // Set HOD combo to match stored name
+                // Faculty who is HOD cannot be deleted
+                // so name always exists in faculty table
+                foreach (DataRowView item in
+                         cboHodName.Items)
+                {
+                    if (item["name"].ToString()
+                        == dept.HodName)
+                    {
+                        cboHodName.SelectedValue =
+                            item["emp_id"];
+                        break;
+                    }
+                }
 
                 _isEditMode = true;
                 _editingId = deptId;
@@ -313,7 +336,8 @@ namespace FacultyWorkloadSystem.Forms
             catch (Exception ex)
             {
                 LogManager.LogError(ex);
-                ValidationHelper.ShowError("Failed to load department details.");
+                ValidationHelper.ShowError(
+                    "Failed to load department.");
             }
         }
 
@@ -419,17 +443,8 @@ namespace FacultyWorkloadSystem.Forms
         private void menuRefresh_Click(object sender, EventArgs e)
         {
             ClearForm();
+            LoadHodCombo();
             LoadDepartments();
-        }
-
-        private void menuExport_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Export to PDF will be available\n" +
-                "when the Reports module is complete.",
-                "Coming Soon",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
         }
 
         private void menuClose_Click(object sender, EventArgs e)
@@ -464,6 +479,45 @@ namespace FacultyWorkloadSystem.Forms
             MouseEventArgs e)
         {
             _isDragging = false;
+        }
+
+        private void LoadHodCombo()
+        {
+            try
+            {
+                cboHodName.DataSource = null;
+                cboHodName.Items.Clear();
+
+                DataTable dt =
+                    FacultyDAL.GetAllForCombo();
+
+                // Add blank first option
+                DataRow blank = dt.NewRow();
+                blank["emp_id"] = DBNull.Value;
+                blank["name"] = "-- Select HOD --";
+                dt.Rows.InsertAt(blank, 0);
+
+                cboHodName.DataSource = dt;
+                cboHodName.DisplayMember = "name";
+                cboHodName.ValueMember = "emp_id";
+                cboHodName.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                LogManager.LogError(ex);
+                ValidationHelper.ShowError(
+                    "Failed to load faculty list " +
+                    "for HOD selection.");
+            }
+        }
+
+        private void btnAddHodFaculty_Click(object sender, EventArgs e)
+        {
+            FacultyForm form = new FacultyForm();
+            form.ShowDialog();
+
+            // Refresh combo after adding faculty
+            LoadHodCombo();
         }
     }
 }

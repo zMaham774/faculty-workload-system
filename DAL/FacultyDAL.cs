@@ -316,5 +316,41 @@ namespace FacultyWorkloadSystem.DAL
                 row["status"].ToString()
             );
         }
+
+        // Get active faculty for ComboBox 
+        public static DataTable GetAllForCombo()
+        {
+            string sql = @"
+        SELECT emp_id,
+               name
+        FROM   faculty
+        WHERE  is_active = 1
+        ORDER  BY name ASC";
+
+            return DatabaseHelper.ExecuteQuery(sql);
+        }
+
+        // ── Check if faculty is HOD of any dept ───────
+        public static bool IsHOD(int empId)
+        {
+            // Check if this faculty's name is
+            // stored as hod_name in any department
+            string sql = @"
+        SELECT COUNT(*)
+        FROM   departments d
+        JOIN   faculty     f
+               ON d.hod_name = f.name
+        WHERE  f.emp_id   = @empId
+        AND    d.is_active = 1";
+
+            var p = new[]
+            {
+        new MySqlParameter("@empId", empId)
+    };
+
+            object result =
+                DatabaseHelper.ExecuteScalar(sql, p);
+            return Convert.ToInt32(result) > 0;
+        }
     }
 }

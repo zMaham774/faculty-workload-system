@@ -59,6 +59,32 @@ namespace FacultyWorkloadSystem.Forms
         {
             dgvCourses.Columns.Clear();
 
+            dgvCourses.EnableHeadersVisualStyles
+                = false;
+            dgvCourses
+                .ColumnHeadersDefaultCellStyle
+                .BackColor =
+                    Color.FromArgb(9, 74, 158);
+            dgvCourses
+                .ColumnHeadersDefaultCellStyle
+                .ForeColor = Color.White;
+            dgvCourses
+                .ColumnHeadersDefaultCellStyle
+                .Font =
+                    new Font("Segoe UI", 9f,
+                             FontStyle.Bold);
+            dgvCourses.ColumnHeadersHeight = 36;
+            dgvCourses.ColumnHeadersHeightSizeMode
+                = DataGridViewColumnHeadersHeightSizeMode
+                  .DisableResizing;
+            dgvCourses
+                .AlternatingRowsDefaultCellStyle
+                .BackColor =
+                    Color.FromArgb(240, 248, 255);
+            dgvCourses.RowTemplate.Height = 32;
+            dgvCourses.GridColor =
+                Color.FromArgb(220, 230, 242);
+
             dgvCourses.Columns.Add(
                 new DataGridViewTextBoxColumn
                 {

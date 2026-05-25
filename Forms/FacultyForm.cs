@@ -477,6 +477,18 @@ namespace FacultyWorkloadSystem.Forms
 
         private void DeleteFaculty(int empId)
         {
+            // Check if faculty is HOD of any dept
+            if (FacultyDAL.IsHOD(empId))
+            {
+                ValidationHelper.ShowError(
+                    "Cannot delete this faculty member.\n" +
+                    "They are currently assigned as HOD " +
+                    "of a department.\n" +
+                    "Please assign a new HOD in the " +
+                    "Department form first.");
+                return;
+            }
+
             if (FacultyDAL.HasAssignments(empId))
             {
                 ValidationHelper.ShowError(
@@ -603,18 +615,6 @@ namespace FacultyWorkloadSystem.Forms
             LoadDepartmentCombo();
             LoadDesignationCombo();
             LoadFaculty();
-        }
-
-        private void menuExport_Click(
-            object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Export to PDF will be available\n" +
-                "when the Reports module " +
-                "is complete.",
-                "Coming Soon",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
         }
 
         private void menuClose_Click(

@@ -447,11 +447,12 @@ namespace FacultyWorkloadSystem.Forms
             this.Show();
         }
 
-        private void btnCourses_Click(
-      object s, EventArgs e)
+        private void btnCourses_Click(object s, EventArgs e)
         {
             CourseForm form = new CourseForm();
+            this.Hide();
             form.ShowDialog();
+            this.Show();
         }
 
         private void btnWorkload_Click(
@@ -499,11 +500,13 @@ namespace FacultyWorkloadSystem.Forms
                 "Info", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
-        private void btnUsers_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show("Users — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        private void btnUsers_Click(object sender, EventArgs e)
+        {
+            UserForm userForm = new UserForm();
+            this.Hide();
+            userForm.ShowDialog();
+            this.Show();
+        }
 
         private void btnSemesters_Click(
             object s, EventArgs e) =>

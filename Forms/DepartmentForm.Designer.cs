@@ -36,26 +36,26 @@
             this.minimizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTitle = new System.Windows.Forms.Label();
             this.gradientPanel1 = new FacultyWorkloadSystem.Helpers.GradientPanel();
             this.pnlForm = new System.Windows.Forms.Panel();
-            this.lblFormTitle = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
-            this.txtDeptName = new System.Windows.Forms.TextBox();
-            this.lblHOD = new System.Windows.Forms.Label();
-            this.txtHodName = new System.Windows.Forms.TextBox();
-            this.lblContact = new System.Windows.Forms.Label();
-            this.txtContact = new System.Windows.Forms.TextBox();
-            this.lblEmail = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.rbActive = new System.Windows.Forms.RadioButton();
-            this.rbInactive = new System.Windows.Forms.RadioButton();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnAddHodFaculty = new System.Windows.Forms.Button();
+            this.cboHodName = new System.Windows.Forms.ComboBox();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.rbInactive = new System.Windows.Forms.RadioButton();
+            this.rbActive = new System.Windows.Forms.RadioButton();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.lblEmail = new System.Windows.Forms.Label();
+            this.txtContact = new System.Windows.Forms.TextBox();
+            this.lblContact = new System.Windows.Forms.Label();
+            this.lblHOD = new System.Windows.Forms.Label();
+            this.txtDeptName = new System.Windows.Forms.TextBox();
+            this.lblName = new System.Windows.Forms.Label();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.pnlSearch = new System.Windows.Forms.Panel();
             this.btnShowAll = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -79,7 +79,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(1340, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(1340, 33);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -91,57 +91,49 @@
             this.minimizeToolStripMenuItem,
             this.toolStripMenuItem1,
             this.refreshToolStripMenuItem,
-            this.exportToolStripMenuItem,
             this.toolStripMenuItem2,
             this.closeToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 30);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // menuMaximize
             // 
             this.menuMaximize.Name = "menuMaximize";
-            this.menuMaximize.Size = new System.Drawing.Size(270, 34);
+            this.menuMaximize.Size = new System.Drawing.Size(196, 34);
             this.menuMaximize.Text = "Maximize";
             this.menuMaximize.Click += new System.EventHandler(this.menuMaximize_Click);
             // 
             // minimizeToolStripMenuItem
             // 
             this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
-            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.minimizeToolStripMenuItem.Text = "Minimize";
             this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.menuMinimize_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(267, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(193, 6);
             // 
             // refreshToolStripMenuItem
             // 
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.menuRefresh_Click);
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.exportToolStripMenuItem.Text = "Export";
-            this.exportToolStripMenuItem.Click += new System.EventHandler(this.menuExport_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(267, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(193, 6);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -163,7 +155,7 @@
             this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.gradientPanel1.gradientBottom = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(145)))), ((int)(((byte)(245)))));
             this.gradientPanel1.gradientTop = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            this.gradientPanel1.Location = new System.Drawing.Point(0, 36);
+            this.gradientPanel1.Location = new System.Drawing.Point(0, 33);
             this.gradientPanel1.MaximumSize = new System.Drawing.Size(0, 60);
             this.gradientPanel1.Name = "gradientPanel1";
             this.gradientPanel1.Size = new System.Drawing.Size(1340, 60);
@@ -177,6 +169,8 @@
             this.pnlForm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlForm.BackColor = System.Drawing.Color.White;
+            this.pnlForm.Controls.Add(this.btnAddHodFaculty);
+            this.pnlForm.Controls.Add(this.cboHodName);
             this.pnlForm.Controls.Add(this.btnClear);
             this.pnlForm.Controls.Add(this.btnSave);
             this.pnlForm.Controls.Add(this.rbInactive);
@@ -186,7 +180,6 @@
             this.pnlForm.Controls.Add(this.lblEmail);
             this.pnlForm.Controls.Add(this.txtContact);
             this.pnlForm.Controls.Add(this.lblContact);
-            this.pnlForm.Controls.Add(this.txtHodName);
             this.pnlForm.Controls.Add(this.lblHOD);
             this.pnlForm.Controls.Add(this.txtDeptName);
             this.pnlForm.Controls.Add(this.lblName);
@@ -196,131 +189,47 @@
             this.pnlForm.Size = new System.Drawing.Size(1336, 319);
             this.pnlForm.TabIndex = 4;
             // 
-            // lblFormTitle
+            // btnAddHodFaculty
             // 
-            this.lblFormTitle.AutoSize = true;
-            this.lblFormTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            this.lblFormTitle.Location = new System.Drawing.Point(15, 6);
-            this.lblFormTitle.Name = "lblFormTitle";
-            this.lblFormTitle.Size = new System.Drawing.Size(261, 28);
-            this.lblFormTitle.TabIndex = 1;
-            this.lblFormTitle.Text = "ADD / EDIT DEPARTMENT";
+            this.btnAddHodFaculty.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAddHodFaculty.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
+            this.btnAddHodFaculty.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddHodFaculty.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddHodFaculty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
+            this.btnAddHodFaculty.Location = new System.Drawing.Point(779, 99);
+            this.btnAddHodFaculty.Name = "btnAddHodFaculty";
+            this.btnAddHodFaculty.Size = new System.Drawing.Size(141, 36);
+            this.btnAddHodFaculty.TabIndex = 19;
+            this.btnAddHodFaculty.Text = "Add Faculty";
+            this.btnAddHodFaculty.UseVisualStyleBackColor = true;
+            this.btnAddHodFaculty.Click += new System.EventHandler(this.btnAddHodFaculty_Click);
             // 
-            // lblName
+            // cboHodName
             // 
-            this.lblName.AutoSize = true;
-            this.lblName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.ForeColor = System.Drawing.Color.Black;
-            this.lblName.Location = new System.Drawing.Point(15, 45);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(113, 25);
-            this.lblName.TabIndex = 5;
-            this.lblName.Text = "Dept Name:";
+            this.cboHodName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboHodName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboHodName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboHodName.FormattingEnabled = true;
+            this.cboHodName.Location = new System.Drawing.Point(134, 99);
+            this.cboHodName.Name = "cboHodName";
+            this.cboHodName.Size = new System.Drawing.Size(615, 36);
+            this.cboHodName.TabIndex = 18;
             // 
-            // txtDeptName
+            // btnClear
             // 
-            this.txtDeptName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDeptName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDeptName.Location = new System.Drawing.Point(134, 43);
-            this.txtDeptName.Name = "txtDeptName";
-            this.txtDeptName.Size = new System.Drawing.Size(613, 34);
-            this.txtDeptName.TabIndex = 6;
-            // 
-            // lblHOD
-            // 
-            this.lblHOD.AutoSize = true;
-            this.lblHOD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHOD.ForeColor = System.Drawing.Color.Black;
-            this.lblHOD.Location = new System.Drawing.Point(14, 105);
-            this.lblHOD.Name = "lblHOD";
-            this.lblHOD.Size = new System.Drawing.Size(113, 25);
-            this.lblHOD.TabIndex = 7;
-            this.lblHOD.Text = "HOD Name:";
-            // 
-            // txtHodName
-            // 
-            this.txtHodName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHodName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHodName.Location = new System.Drawing.Point(134, 105);
-            this.txtHodName.Name = "txtHodName";
-            this.txtHodName.Size = new System.Drawing.Size(613, 34);
-            this.txtHodName.TabIndex = 8;
-            // 
-            // lblContact
-            // 
-            this.lblContact.AutoSize = true;
-            this.lblContact.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblContact.ForeColor = System.Drawing.Color.Black;
-            this.lblContact.Location = new System.Drawing.Point(26, 170);
-            this.lblContact.Name = "lblContact";
-            this.lblContact.Size = new System.Drawing.Size(83, 25);
-            this.lblContact.TabIndex = 9;
-            this.lblContact.Text = "Contact:";
-            // 
-            // txtContact
-            // 
-            this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtContact.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtContact.Location = new System.Drawing.Point(134, 166);
-            this.txtContact.Name = "txtContact";
-            this.txtContact.Size = new System.Drawing.Size(245, 34);
-            this.txtContact.TabIndex = 10;
-            // 
-            // lblEmail
-            // 
-            this.lblEmail.AutoSize = true;
-            this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmail.ForeColor = System.Drawing.Color.Black;
-            this.lblEmail.Location = new System.Drawing.Point(428, 171);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(63, 25);
-            this.lblEmail.TabIndex = 11;
-            this.lblEmail.Text = "Email:";
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(494, 168);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(255, 34);
-            this.txtEmail.TabIndex = 12;
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.ForeColor = System.Drawing.Color.Black;
-            this.lblStatus.Location = new System.Drawing.Point(28, 225);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(70, 25);
-            this.lblStatus.TabIndex = 13;
-            this.lblStatus.Text = "Status:";
-            // 
-            // rbActive
-            // 
-            this.rbActive.AutoSize = true;
-            this.rbActive.Checked = true;
-            this.rbActive.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbActive.Location = new System.Drawing.Point(133, 225);
-            this.rbActive.Name = "rbActive";
-            this.rbActive.Size = new System.Drawing.Size(85, 29);
-            this.rbActive.TabIndex = 14;
-            this.rbActive.TabStop = true;
-            this.rbActive.Text = "Active";
-            this.rbActive.UseVisualStyleBackColor = true;
-            // 
-            // rbInactive
-            // 
-            this.rbInactive.AutoSize = true;
-            this.rbInactive.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbInactive.Location = new System.Drawing.Point(227, 225);
-            this.rbInactive.Name = "rbInactive";
-            this.rbInactive.Size = new System.Drawing.Size(97, 29);
-            this.rbInactive.TabIndex = 15;
-            this.rbInactive.Text = "Inactive";
-            this.rbInactive.UseVisualStyleBackColor = true;
+            this.btnClear.BackColor = System.Drawing.Color.White;
+            this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClear.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
+            this.btnClear.Location = new System.Drawing.Point(203, 269);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(150, 40);
+            this.btnClear.TabIndex = 17;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnSave
             // 
@@ -338,21 +247,122 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnClear
+            // rbInactive
             // 
-            this.btnClear.BackColor = System.Drawing.Color.White;
-            this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            this.btnClear.Location = new System.Drawing.Point(203, 269);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(150, 40);
-            this.btnClear.TabIndex = 17;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = false;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.rbInactive.AutoSize = true;
+            this.rbInactive.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbInactive.Location = new System.Drawing.Point(227, 225);
+            this.rbInactive.Name = "rbInactive";
+            this.rbInactive.Size = new System.Drawing.Size(97, 29);
+            this.rbInactive.TabIndex = 15;
+            this.rbInactive.Text = "Inactive";
+            this.rbInactive.UseVisualStyleBackColor = true;
+            // 
+            // rbActive
+            // 
+            this.rbActive.AutoSize = true;
+            this.rbActive.Checked = true;
+            this.rbActive.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbActive.Location = new System.Drawing.Point(133, 225);
+            this.rbActive.Name = "rbActive";
+            this.rbActive.Size = new System.Drawing.Size(85, 29);
+            this.rbActive.TabIndex = 14;
+            this.rbActive.TabStop = true;
+            this.rbActive.Text = "Active";
+            this.rbActive.UseVisualStyleBackColor = true;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.Black;
+            this.lblStatus.Location = new System.Drawing.Point(28, 225);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(70, 25);
+            this.lblStatus.TabIndex = 13;
+            this.lblStatus.Text = "Status:";
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEmail.Location = new System.Drawing.Point(494, 168);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(255, 34);
+            this.txtEmail.TabIndex = 12;
+            // 
+            // lblEmail
+            // 
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmail.ForeColor = System.Drawing.Color.Black;
+            this.lblEmail.Location = new System.Drawing.Point(428, 171);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(63, 25);
+            this.lblEmail.TabIndex = 11;
+            this.lblEmail.Text = "Email:";
+            // 
+            // txtContact
+            // 
+            this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtContact.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtContact.Location = new System.Drawing.Point(134, 166);
+            this.txtContact.Name = "txtContact";
+            this.txtContact.Size = new System.Drawing.Size(245, 34);
+            this.txtContact.TabIndex = 10;
+            // 
+            // lblContact
+            // 
+            this.lblContact.AutoSize = true;
+            this.lblContact.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblContact.ForeColor = System.Drawing.Color.Black;
+            this.lblContact.Location = new System.Drawing.Point(26, 170);
+            this.lblContact.Name = "lblContact";
+            this.lblContact.Size = new System.Drawing.Size(83, 25);
+            this.lblContact.TabIndex = 9;
+            this.lblContact.Text = "Contact:";
+            // 
+            // lblHOD
+            // 
+            this.lblHOD.AutoSize = true;
+            this.lblHOD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHOD.ForeColor = System.Drawing.Color.Black;
+            this.lblHOD.Location = new System.Drawing.Point(14, 105);
+            this.lblHOD.Name = "lblHOD";
+            this.lblHOD.Size = new System.Drawing.Size(113, 25);
+            this.lblHOD.TabIndex = 7;
+            this.lblHOD.Text = "HOD Name:";
+            // 
+            // txtDeptName
+            // 
+            this.txtDeptName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDeptName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDeptName.Location = new System.Drawing.Point(134, 43);
+            this.txtDeptName.Name = "txtDeptName";
+            this.txtDeptName.Size = new System.Drawing.Size(613, 34);
+            this.txtDeptName.TabIndex = 6;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.ForeColor = System.Drawing.Color.Black;
+            this.lblName.Location = new System.Drawing.Point(15, 45);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(113, 25);
+            this.lblName.TabIndex = 5;
+            this.lblName.Text = "Dept Name:";
+            // 
+            // lblFormTitle
+            // 
+            this.lblFormTitle.AutoSize = true;
+            this.lblFormTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
+            this.lblFormTitle.Location = new System.Drawing.Point(15, 6);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Size = new System.Drawing.Size(261, 28);
+            this.lblFormTitle.TabIndex = 1;
+            this.lblFormTitle.Text = "ADD / EDIT DEPARTMENT";
             // 
             // pnlSearch
             // 
@@ -491,7 +501,6 @@
         private System.Windows.Forms.ToolStripMenuItem minimizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.Label lblTitle;
@@ -505,7 +514,6 @@
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtContact;
         private System.Windows.Forms.Label lblContact;
-        private System.Windows.Forms.TextBox txtHodName;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.RadioButton rbInactive;
@@ -517,5 +525,7 @@
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.DataGridView dgvDepartments;
+        private System.Windows.Forms.ComboBox cboHodName;
+        private System.Windows.Forms.Button btnAddHodFaculty;
     }
 }
