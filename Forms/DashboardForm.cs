@@ -509,11 +509,11 @@ namespace FacultyWorkloadSystem.Forms
         }
 
         private void btnSemesters_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show(
-                "Semesters — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+      object s, EventArgs e)
+        {
+            SemesterForm form = new SemesterForm();
+            form.ShowDialog();
+        }
 
         private void btnLogout_Click(
             object s, EventArgs e)

@@ -100,6 +100,7 @@
     <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DAL\DesignationDAL.cs" />
     <Compile Include="DAL\FacultyDAL.cs" />
+    <Compile Include="DAL\SemesterDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="Forms\CourseForm.cs">
       <SubType>Form</SubType>
@@ -137,6 +138,12 @@
     <Compile Include="Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SemesterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SemesterForm.Designer.cs">
+      <DependentUpon>SemesterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +168,7 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Faculty.cs" />
+    <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
