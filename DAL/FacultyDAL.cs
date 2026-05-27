@@ -157,68 +157,133 @@ namespace FacultyWorkloadSystem.DAL
                 .ExecuteNonQuery(sql, p) > 0;
         }
 
-        // Update
+        // ── Update faculty + sync hod_name ────────────
+        // Uses transaction to keep faculty name and
+        // departments.hod_name in sync atomically.
+        // Trigger trg_faculty_update_log still fires
+        // automatically on the faculty UPDATE.
         public static bool Update(Faculty f)
         {
-            using (var conn = DatabaseHelper.GetConnection())
+            using (var conn =
+                DatabaseHelper.GetConnection())
             {
                 conn.Open();
 
-                // Step 1 — Tell MySQL who is logged in
-                // by setting a session variable
-                // Trigger reads this as @current_user_id
-                var setUser = new MySqlCommand(
-                    "SET @current_user_id = @userId",
-                    conn);
-                setUser.Parameters.AddWithValue(
-                    "@userId",
-                    SessionManager.UserId);
-                setUser.ExecuteNonQuery();
+                MySqlTransaction transaction =
+                    conn.BeginTransaction();
 
-                // Step 2 — Run the actual UPDATE
-                // Trigger fires here and reads
-                // @current_user_id automatically
-                string sql = @"
-            UPDATE faculty
-            SET    name           = @name,
-                   dept_id        = @deptId,
-                   designation_id = @desigId,
-                   emp_type       = @empType,
-                   email          = @email,
-                   phone          = @phone,
-                   qualification  = @qual,
-                   is_active      = @isActive
-            WHERE  emp_id         = @empId";
+                try
+                {
+                    // Step 1 — Set session variable
+                    // so trigger knows who made change
+                    var setUser = new MySqlCommand(
+                        "SET @current_user_id = @userId",
+                        conn, transaction);
+                    setUser.Parameters.AddWithValue(
+                        "@userId",
+                        SessionManager.UserId);
+                    setUser.ExecuteNonQuery();
 
-                var cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue(
-                    "@name", f.Name);
-                cmd.Parameters.AddWithValue(
-                    "@deptId", f.DeptId);
-                cmd.Parameters.AddWithValue(
-                    "@desigId", f.DesignationId);
-                cmd.Parameters.AddWithValue(
-                    "@empType", f.EmpType);
-                cmd.Parameters.AddWithValue(
-                    "@email",
-                    string.IsNullOrEmpty(f.Email)
-                        ? (object)DBNull.Value : f.Email);
-                cmd.Parameters.AddWithValue(
-                    "@phone",
-                    string.IsNullOrEmpty(f.Phone)
-                        ? (object)DBNull.Value : f.Phone);
-                cmd.Parameters.AddWithValue(
-                    "@qual",
-                    string.IsNullOrEmpty(f.Qualification)
-                        ? (object)DBNull.Value
-                        : f.Qualification);
-                cmd.Parameters.AddWithValue(
-                    "@isActive",
-                    f.IsActive ? 1 : 0);
-                cmd.Parameters.AddWithValue(
-                    "@empId", f.EmpId);
+                    // Step 2 — Get old name BEFORE
+                    // update so we can match it
+                    // in departments table
+                    string getOldName = @"
+                SELECT name
+                FROM   faculty
+                WHERE  emp_id = @empId";
 
-                return cmd.ExecuteNonQuery() > 0;
+                    var getCmd = new MySqlCommand(
+                        getOldName, conn, transaction);
+                    getCmd.Parameters.AddWithValue(
+                        "@empId", f.EmpId);
+
+                    string oldName =
+                        getCmd.ExecuteScalar()
+                              ?.ToString() ?? "";
+
+                    // Step 3 — Update faculty row
+                    // Trigger fires automatically here
+                    string updateFaculty = @"
+                UPDATE faculty
+                SET    name           = @name,
+                       dept_id        = @deptId,
+                       designation_id = @desigId,
+                       emp_type       = @empType,
+                       email          = @email,
+                       phone          = @phone,
+                       qualification  = @qual,
+                       is_active      = @isActive
+                WHERE  emp_id         = @empId";
+
+                    var updCmd = new MySqlCommand(
+                        updateFaculty, conn, transaction);
+
+                    updCmd.Parameters.AddWithValue(
+                        "@name", f.Name);
+                    updCmd.Parameters.AddWithValue(
+                        "@deptId", f.DeptId);
+                    updCmd.Parameters.AddWithValue(
+                        "@desigId", f.DesignationId);
+                    updCmd.Parameters.AddWithValue(
+                        "@empType", f.EmpType);
+                    updCmd.Parameters.AddWithValue(
+                        "@email",
+                        string.IsNullOrEmpty(f.Email)
+                            ? (object)DBNull.Value
+                            : f.Email);
+                    updCmd.Parameters.AddWithValue(
+                        "@phone",
+                        string.IsNullOrEmpty(f.Phone)
+                            ? (object)DBNull.Value
+                            : f.Phone);
+                    updCmd.Parameters.AddWithValue(
+                        "@qual",
+                        string.IsNullOrEmpty(
+                            f.Qualification)
+                            ? (object)DBNull.Value
+                            : f.Qualification);
+                    updCmd.Parameters.AddWithValue(
+                        "@isActive",
+                        f.IsActive ? 1 : 0);
+                    updCmd.Parameters.AddWithValue(
+                        "@empId", f.EmpId);
+
+                    updCmd.ExecuteNonQuery();
+
+                    // Step 4 — If name changed sync
+                    // hod_name in departments table
+                    if (!string.IsNullOrEmpty(oldName) &&
+                        oldName != f.Name)
+                    {
+                        string syncHod = @"
+                    UPDATE departments
+                    SET    hod_name = @newName
+                    WHERE  hod_name = @oldName";
+
+                        var syncCmd = new MySqlCommand(
+                            syncHod, conn, transaction);
+
+                        syncCmd.Parameters.AddWithValue(
+                            "@newName", f.Name);
+                        syncCmd.Parameters.AddWithValue(
+                            "@oldName", oldName);
+
+                        syncCmd.ExecuteNonQuery();
+                    }
+
+                    // Step 5 — Commit both updates
+                    // together as one atomic operation
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    // If anything fails roll back
+                    // both updates together
+                    transaction.Rollback();
+                    LogManager.LogError(ex);
+                    throw;
+                }
             }
         }
 
@@ -333,23 +398,41 @@ namespace FacultyWorkloadSystem.DAL
         // ── Check if faculty is HOD of any dept ───────
         public static bool IsHOD(int empId)
         {
-            // Check if this faculty's name is
-            // stored as hod_name in any department
-            string sql = @"
-        SELECT COUNT(*)
-        FROM   departments d
-        JOIN   faculty     f
-               ON d.hod_name = f.name
-        WHERE  f.emp_id   = @empId
-        AND    d.is_active = 1";
+            // Get faculty name first
+            string getName = @"
+        SELECT name FROM faculty
+        WHERE  emp_id = @empId";
 
             var p = new[]
             {
         new MySqlParameter("@empId", empId)
     };
 
+            object nameResult =
+                DatabaseHelper.ExecuteScalar(
+                    getName, p);
+
+            if (nameResult == null) return false;
+
+            string facultyName = nameResult.ToString();
+
+            // Check if name exists as hod_name
+            // in any active department
+            string checkHod = @"
+        SELECT COUNT(*)
+        FROM   departments
+        WHERE  hod_name  = @name
+        AND    is_active = 1";
+
+            var p2 = new[]
+            {
+        new MySqlParameter("@name", facultyName)
+    };
+
             object result =
-                DatabaseHelper.ExecuteScalar(sql, p);
+                DatabaseHelper.ExecuteScalar(
+                    checkHod, p2);
+
             return Convert.ToInt32(result) > 0;
         }
     }

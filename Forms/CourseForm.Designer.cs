@@ -93,38 +93,38 @@
             // menuMaximize
             // 
             this.menuMaximize.Name = "menuMaximize";
-            this.menuMaximize.Size = new System.Drawing.Size(270, 34);
+            this.menuMaximize.Size = new System.Drawing.Size(196, 34);
             this.menuMaximize.Text = "Maximize";
             this.menuMaximize.Click += new System.EventHandler(this.menuMaximize_Click);
             // 
             // menuMinimize
             // 
             this.menuMinimize.Name = "menuMinimize";
-            this.menuMinimize.Size = new System.Drawing.Size(270, 34);
+            this.menuMinimize.Size = new System.Drawing.Size(196, 34);
             this.menuMinimize.Text = "Minimize";
             this.menuMinimize.Click += new System.EventHandler(this.menuMinimize_Click);
             // 
             // sep1
             // 
             this.sep1.Name = "sep1";
-            this.sep1.Size = new System.Drawing.Size(267, 6);
+            this.sep1.Size = new System.Drawing.Size(193, 6);
             // 
             // menuRefresh
             // 
             this.menuRefresh.Name = "menuRefresh";
-            this.menuRefresh.Size = new System.Drawing.Size(270, 34);
+            this.menuRefresh.Size = new System.Drawing.Size(196, 34);
             this.menuRefresh.Text = "Refresh";
             this.menuRefresh.Click += new System.EventHandler(this.menuRefresh_Click);
             // 
             // sep2
             // 
             this.sep2.Name = "sep2";
-            this.sep2.Size = new System.Drawing.Size(267, 6);
+            this.sep2.Size = new System.Drawing.Size(193, 6);
             // 
             // menuClose
             // 
             this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(270, 34);
+            this.menuClose.Size = new System.Drawing.Size(196, 34);
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -157,6 +157,9 @@
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "COURSE MANAGEMENT";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeader_MouseDown);
+            this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeader_MouseMove);
+            this.lblTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeader_MouseUp);
             // 
             // lblFormTitle
             // 

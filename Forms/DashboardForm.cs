@@ -508,11 +508,12 @@ namespace FacultyWorkloadSystem.Forms
             this.Show();
         }
 
-        private void btnSemesters_Click(
-      object s, EventArgs e)
+        private void btnSemesters_Click(object s, EventArgs e)
         {
             SemesterForm form = new SemesterForm();
+            this.Hide();
             form.ShowDialog();
+            this.Show();
         }
 
         private void btnLogout_Click(

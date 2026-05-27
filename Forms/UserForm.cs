@@ -415,6 +415,22 @@ namespace FacultyWorkloadSystem.Forms
                     cboFaculty.Focus();
                     return false;
                 }
+
+                // Faculty must actually be HOD
+                // of a department to get HOD role
+                if (role == "HOD" &&
+                    !FacultyDAL.IsHOD(empId))
+                {
+                    ValidationHelper.ShowError(
+                        "This faculty member is not " +
+                        "assigned as HOD of any department.\n\n" +
+                        "Please assign them as HOD in the " +
+                        "Department form first,\n" +
+                        "then come back and set their " +
+                        "role to HOD.");
+                    cboFaculty.Focus();
+                    return false;
+                }
             }
 
             return true;
