@@ -372,6 +372,7 @@
             this.dgvDesignations.Size = new System.Drawing.Size(1340, 343);
             this.dgvDesignations.TabIndex = 5;
             this.dgvDesignations.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDesignations_CellClick);
+            this.dgvDesignations.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvDesignations_CellFormatting);
             // 
             // gradientPanel1
             // 

@@ -462,6 +462,7 @@
             this.dgvDepartments.Size = new System.Drawing.Size(1340, 290);
             this.dgvDepartments.TabIndex = 6;
             this.dgvDepartments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDepartments_CellClick);
+            this.dgvDepartments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvDepartments_CellFormatting);
             // 
             // DepartmentForm
             // 

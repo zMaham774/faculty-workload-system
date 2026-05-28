@@ -112,38 +112,38 @@
             // menuMaximize
             // 
             this.menuMaximize.Name = "menuMaximize";
-            this.menuMaximize.Size = new System.Drawing.Size(270, 34);
+            this.menuMaximize.Size = new System.Drawing.Size(196, 34);
             this.menuMaximize.Text = "Maximize";
             this.menuMaximize.Click += new System.EventHandler(this.menuMaximize_Click);
             // 
             // minimizeToolStripMenuItem
             // 
             this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
-            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.minimizeToolStripMenuItem.Text = "Minimize";
             this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.menuMinimize_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(267, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(193, 6);
             // 
             // refreshToolStripMenuItem
             // 
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.menuRefresh_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(267, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(193, 6);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -572,6 +572,7 @@
             this.dgvFaculty.Size = new System.Drawing.Size(1340, 296);
             this.dgvFaculty.TabIndex = 7;
             this.dgvFaculty.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaculty_CellClick);
+            this.dgvFaculty.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvFaculty_CellFormatting);
             // 
             // FacultyForm
             // 

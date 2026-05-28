@@ -55,7 +55,7 @@ namespace FacultyWorkloadSystem.DAL
                 FROM     users u
                 LEFT JOIN faculty f
                        ON u.emp_id = f.emp_id
-                ORDER BY u.username ASC";
+                ORDER BY u.user_id ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(sql);
             return MapToList(dt);

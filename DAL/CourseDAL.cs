@@ -24,7 +24,7 @@ namespace FacultyWorkloadSystem.DAL
                 FROM   courses c
                 JOIN   departments d
                     ON c.dept_id = d.dept_id
-                ORDER  BY c.course_code ASC";
+                ORDER  BY c.course_id ASC";
 
             DataTable dt =
                 DatabaseHelper.ExecuteQuery(sql);

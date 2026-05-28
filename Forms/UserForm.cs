@@ -129,10 +129,12 @@ namespace FacultyWorkloadSystem.Forms
             dgvUsers.ColumnHeadersHeightSizeMode
                 = DataGridViewColumnHeadersHeightSizeMode
                   .DisableResizing;
-            dgvUsers
-                .AlternatingRowsDefaultCellStyle
-                .BackColor =
-                    Color.FromArgb(240, 248, 255);
+
+            dgvUsers.DefaultCellStyle.SelectionBackColor =
+                Color.FromArgb(210, 228, 255);
+            dgvUsers.DefaultCellStyle.SelectionForeColor =
+                Color.FromArgb(30, 30, 30);
+
             dgvUsers.RowTemplate.Height = 32;
             dgvUsers.GridColor =
                 Color.FromArgb(220, 230, 242);
@@ -253,6 +255,7 @@ namespace FacultyWorkloadSystem.Forms
                         : "Inactive"
                 );
             }
+            dgvUsers.ClearSelection();
         }
 
         //  SAVE
@@ -669,6 +672,40 @@ namespace FacultyWorkloadSystem.Forms
         private void gradientPanel1_MouseUp(object sender, MouseEventArgs e)
         {
             _isDragging = false;
+        }
+
+        private void dgvUsers_CellFormatting(
+            object sender,
+            DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridView dgv =
+                sender as DataGridView;
+
+            int editIdx =
+                dgv.Columns["colEdit"].Index;
+            int delIdx =
+                dgv.Columns["colDelete"].Index;
+
+            if (e.ColumnIndex != editIdx &&
+                e.ColumnIndex != delIdx)
+            {
+                e.CellStyle.BackColor =
+                    e.RowIndex % 2 == 0
+                    ? Color.White
+                    : Color.FromArgb(240, 248, 255);
+                e.CellStyle.ForeColor =
+                    Color.FromArgb(30, 30, 30);
+            }
+            else
+            {
+                e.CellStyle.BackColor =
+                    e.ColumnIndex == editIdx
+                    ? Color.FromArgb(33, 145, 245)
+                    : Color.FromArgb(220, 53, 69);
+                e.CellStyle.ForeColor = Color.White;
+            }
         }
     }
 }

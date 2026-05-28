@@ -483,6 +483,7 @@
             this.dgvCourses.Size = new System.Drawing.Size(1340, 309);
             this.dgvCourses.TabIndex = 4;
             this.dgvCourses.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCourses_CellClick);
+            this.dgvCourses.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCourses_CellFormatting);
             // 
             // CourseForm
             // 

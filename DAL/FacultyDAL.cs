@@ -26,7 +26,7 @@ namespace FacultyWorkloadSystem.DAL
                        is_active,
                        status
                 FROM   vw_faculty_details
-                ORDER  BY name ASC";
+                ORDER BY emp_id ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(sql);
             return MapToList(dt);
@@ -188,9 +188,9 @@ namespace FacultyWorkloadSystem.DAL
                     // update so we can match it
                     // in departments table
                     string getOldName = @"
-                SELECT name
-                FROM   faculty
-                WHERE  emp_id = @empId";
+        SELECT name
+        FROM   faculty
+        WHERE  emp_id = @empId";
 
                     var getCmd = new MySqlCommand(
                         getOldName, conn, transaction);
@@ -204,16 +204,16 @@ namespace FacultyWorkloadSystem.DAL
                     // Step 3 — Update faculty row
                     // Trigger fires automatically here
                     string updateFaculty = @"
-                UPDATE faculty
-                SET    name           = @name,
-                       dept_id        = @deptId,
-                       designation_id = @desigId,
-                       emp_type       = @empType,
-                       email          = @email,
-                       phone          = @phone,
-                       qualification  = @qual,
-                       is_active      = @isActive
-                WHERE  emp_id         = @empId";
+        UPDATE faculty
+        SET    name           = @name,
+               dept_id        = @deptId,
+               designation_id = @desigId,
+               emp_type       = @empType,
+               email          = @email,
+               phone          = @phone,
+               qualification  = @qual,
+               is_active      = @isActive
+        WHERE  emp_id         = @empId";
 
                     var updCmd = new MySqlCommand(
                         updateFaculty, conn, transaction);
@@ -256,9 +256,9 @@ namespace FacultyWorkloadSystem.DAL
                         oldName != f.Name)
                     {
                         string syncHod = @"
-                    UPDATE departments
-                    SET    hod_name = @newName
-                    WHERE  hod_name = @oldName";
+            UPDATE departments
+            SET    hod_name = @newName
+            WHERE  hod_name = @oldName";
 
                         var syncCmd = new MySqlCommand(
                             syncHod, conn, transaction);

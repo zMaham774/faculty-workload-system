@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMaximize = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,20 +100,20 @@
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 32);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // menuMaximize
             // 
             this.menuMaximize.Name = "menuMaximize";
-            this.menuMaximize.Size = new System.Drawing.Size(270, 34);
+            this.menuMaximize.Size = new System.Drawing.Size(196, 34);
             this.menuMaximize.Text = "Maximize";
             this.menuMaximize.Click += new System.EventHandler(this.menuMaximize_Click);
             // 
             // minimizeToolStripMenuItem
             // 
             this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
-            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.minimizeToolStripMenuItem.Text = "Minimize";
             this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.menuMinimize_Click);
             // 
@@ -125,7 +125,7 @@
             // refreshToolStripMenuItem
             // 
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.menuRefresh_Click);
             // 
@@ -137,7 +137,7 @@
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(196, 34);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -494,22 +494,22 @@
             // 
             this.dgvUsers.AllowUserToAddRows = false;
             this.dgvUsers.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.AliceBlue;
-            this.dgvUsers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
+            this.dgvUsers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvUsers.BackgroundColor = System.Drawing.Color.White;
             this.dgvUsers.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsers.Location = new System.Drawing.Point(0, 495);
             this.dgvUsers.MultiSelect = false;
@@ -522,6 +522,7 @@
             this.dgvUsers.Size = new System.Drawing.Size(1340, 296);
             this.dgvUsers.TabIndex = 7;
             this.dgvUsers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellClick);
+            this.dgvUsers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvUsers_CellFormatting);
             // 
             // UserForm
             // 

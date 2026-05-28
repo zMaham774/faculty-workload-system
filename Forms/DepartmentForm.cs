@@ -49,12 +49,15 @@ namespace FacultyWorkloadSystem.Forms
             dgvDepartments.ColumnHeadersHeightSizeMode
                 = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 
-            // Alternating row colours
-            dgvDepartments.AlternatingRowsDefaultCellStyle.BackColor
-                = Color.FromArgb(240, 248, 255);
 
             // Row height
-            dgvDepartments.RowTemplate.Height = 32;
+            dgvDepartments.RowTemplate.Height = 36;
+            dgvDepartments.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            
+            dgvDepartments.DefaultCellStyle.SelectionBackColor =
+                Color.FromArgb(210, 228, 255);
+            dgvDepartments.DefaultCellStyle.SelectionForeColor =
+                Color.FromArgb(30, 30, 30);
 
             // Grid line colour
             dgvDepartments.GridColor
@@ -177,6 +180,8 @@ namespace FacultyWorkloadSystem.Forms
                     d.IsActive ? "Active" : "Inactive"
                 );
             }
+            // Clears auto-selection of first row
+            dgvDepartments.ClearSelection();
         }
 
         //  SAVE BUTTON
@@ -518,6 +523,64 @@ namespace FacultyWorkloadSystem.Forms
 
             // Refresh combo after adding faculty
             LoadHodCombo();
+        }
+
+        private void dgvDepartments_CellFormatting(
+    object sender,
+    DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridView dgv =
+                sender as DataGridView;
+
+            int editIdx =
+                dgv.Columns["colEdit"].Index;
+            int delIdx =
+                dgv.Columns["colDelete"].Index;
+
+            // Apply alternating row colour
+            // only to non-button columns
+            if (e.ColumnIndex != editIdx &&
+                e.ColumnIndex != delIdx)
+            {
+                if (e.RowIndex % 2 == 0)
+                {
+                    // Even rows — white
+                    e.CellStyle.BackColor =
+                        Color.White;
+                    e.CellStyle.ForeColor =
+                        Color.FromArgb(30, 30, 30);
+                }
+                else
+                {
+                    // Odd rows — light blue
+                    e.CellStyle.BackColor =
+                        Color.FromArgb(240, 248, 255);
+                    e.CellStyle.ForeColor =
+                        Color.FromArgb(30, 30, 30);
+                }
+            }
+            else
+            {
+                // Button columns — always
+                // keep their own colours
+                // regardless of row index
+                if (e.ColumnIndex == editIdx)
+                {
+                    e.CellStyle.BackColor =
+                        Color.FromArgb(33, 145, 245);
+                    e.CellStyle.ForeColor =
+                        Color.White;
+                }
+                else if (e.ColumnIndex == delIdx)
+                {
+                    e.CellStyle.BackColor =
+                        Color.FromArgb(220, 53, 69);
+                    e.CellStyle.ForeColor =
+                        Color.White;
+                }
+            }
         }
     }
 }

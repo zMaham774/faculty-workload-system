@@ -105,13 +105,15 @@ namespace FacultyWorkloadSystem.Forms
             dgvFaculty.ColumnHeadersHeightSizeMode
                 = DataGridViewColumnHeadersHeightSizeMode
                   .DisableResizing;
-            dgvFaculty
-                .AlternatingRowsDefaultCellStyle
-                .BackColor =
-                    Color.FromArgb(240, 248, 255);
+
             dgvFaculty.RowTemplate.Height = 32;
             dgvFaculty.GridColor =
                 Color.FromArgb(220, 230, 242);
+
+            dgvFaculty.DefaultCellStyle.SelectionBackColor =
+                Color.FromArgb(210, 228, 255);
+            dgvFaculty.DefaultCellStyle.SelectionForeColor =
+                Color.FromArgb(30, 30, 30);
 
             dgvFaculty.Columns.Add(
                 new DataGridViewTextBoxColumn
@@ -249,6 +251,7 @@ namespace FacultyWorkloadSystem.Forms
                     f.Status
                 );
             }
+            dgvFaculty.ClearSelection();
         }
 
         //  SAVE — trigger fires automatically on UPDATE
@@ -651,6 +654,40 @@ namespace FacultyWorkloadSystem.Forms
             object sender, MouseEventArgs e)
         {
             _isDragging = false;
+        }
+
+        private void dgvFaculty_CellFormatting(
+            object sender,
+            DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridView dgv =
+                sender as DataGridView;
+
+            int editIdx =
+                dgv.Columns["colEdit"].Index;
+            int delIdx =
+                dgv.Columns["colDelete"].Index;
+
+            if (e.ColumnIndex != editIdx &&
+                e.ColumnIndex != delIdx)
+            {
+                e.CellStyle.BackColor =
+                    e.RowIndex % 2 == 0
+                    ? Color.White
+                    : Color.FromArgb(240, 248, 255);
+                e.CellStyle.ForeColor =
+                    Color.FromArgb(30, 30, 30);
+            }
+            else
+            {
+                e.CellStyle.BackColor =
+                    e.ColumnIndex == editIdx
+                    ? Color.FromArgb(33, 145, 245)
+                    : Color.FromArgb(220, 53, 69);
+                e.CellStyle.ForeColor = Color.White;
+            }
         }
     }
 }

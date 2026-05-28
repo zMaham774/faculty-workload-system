@@ -18,8 +18,8 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMaximize = new System.Windows.Forms.ToolStripMenuItem();
@@ -379,21 +379,21 @@
             // 
             this.dgvSemesters.AllowUserToAddRows = false;
             this.dgvSemesters.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.AliceBlue;
-            this.dgvSemesters.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
+            this.dgvSemesters.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvSemesters.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSemesters.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSemesters.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSemesters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSemesters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvSemesters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSemesters.Location = new System.Drawing.Point(0, 475);
             this.dgvSemesters.MultiSelect = false;
@@ -406,6 +406,7 @@
             this.dgvSemesters.Size = new System.Drawing.Size(1340, 290);
             this.dgvSemesters.TabIndex = 6;
             this.dgvSemesters.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSemesters_CellClick);
+            this.dgvSemesters.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvSemesters_CellFormatting);
             // 
             // SemesterForm
             // 
