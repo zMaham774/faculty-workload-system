@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\AcademicCalendarDAL.cs" />
     <Compile Include="DAL\CourseDAL.cs" />
     <Compile Include="DAL\DashboardDAL.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
@@ -103,6 +104,12 @@
     <Compile Include="DAL\SemesterDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="DAL\WorkloadStandardDAL.cs" />
+    <Compile Include="Forms\AcademicCalendarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AcademicCalendarForm.Designer.cs">
+      <DependentUpon>AcademicCalendarForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CourseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +178,7 @@
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\SessionManager.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="Models\AcademicCalendar.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Designation.cs" />
@@ -180,6 +188,9 @@
     <Compile Include="Models\WorkloadStandard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AcademicCalendarForm.resx">
+      <DependentUpon>AcademicCalendarForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CourseForm.resx">
       <DependentUpon>CourseForm.cs</DependentUpon>
     </EmbeddedResource>

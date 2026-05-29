@@ -488,11 +488,13 @@ namespace FacultyWorkloadSystem.Forms
                 "Info", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
-        private void btnCalendar_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show("Calendar — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        private void btnCalendar_Click(object sender, EventArgs e)
+        {
+            AcademicCalendarForm calendarForm = new AcademicCalendarForm();
+            this.Hide();
+            calendarForm.ShowDialog();
+            this.Show();
+        }
 
         private void btnReports_Click(
             object s, EventArgs e) =>
