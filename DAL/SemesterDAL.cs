@@ -261,5 +261,17 @@ namespace FacultyWorkloadSystem.DAL
                         row["is_current"]) == 1
             };
         }
+
+        // ── Get all for ComboBox ──────────────────────
+        public static DataTable GetAllForCombo()
+        {
+            string sql = @"
+                SELECT sem_id,
+                       sem_name
+                FROM   semesters
+                ORDER  BY sem_id DESC";
+
+            return DatabaseHelper.ExecuteQuery(sql);
+        }
     }
 }
