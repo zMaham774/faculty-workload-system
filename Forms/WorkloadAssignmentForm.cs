@@ -533,6 +533,17 @@ namespace FacultyWorkloadSystem.Forms
             int courseId = Convert.ToInt32(cboCourse.SelectedValue);
             int semId = Convert.ToInt32(cboSemester.SelectedValue);
 
+            // Only block if it's a brand new assignment record
+            if (!_isEditMode)
+            {
+                Semester selectedSem = SemesterDAL.GetById(semId);
+                if (selectedSem != null && !selectedSem.IsCurrent)
+                {
+                    ValidationHelper.ShowError("Cannot create new assignments for an inactive semester.");
+                    return false;
+                }
+            }
+
             // Duplicate check
             if (WorkloadAssignmentDAL.Exists(empId, courseId, semId, _editingId))
             {

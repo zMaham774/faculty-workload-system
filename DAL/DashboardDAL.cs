@@ -58,70 +58,52 @@ namespace FacultyWorkloadSystem.DAL
             return r == null ? "No Active Semester" : r.ToString();
         }
 
-        // ── Today's Schedule (for logged-in faculty) ──────
+        // ── Today's Schedule using VIEW ───────────────────
         public static DataTable GetTodaySchedule(int? empId)
         {
-            string today = DateTime.Now.DayOfWeek.ToString();
             string q;
             MySqlParameter[] p;
 
             if (empId == null)
             {
-                // Admin/HOD — show all today's classes
-                q = @"SELECT 
-                        f.name        AS FacultyName,
-                        c.title       AS CourseName,
-                        c.course_code AS CourseCode,
-                        ts.slot_label AS TimeSlot,
-                        tt.room       AS Room,
-                        tt.day_of_week AS DayOfWeek
-                      FROM timetable tt
-                      JOIN workload_assignments wa 
-                           ON wa.wa_id = tt.wa_id
-                      JOIN faculty f  
-                           ON f.emp_id = wa.emp_id
-                      JOIN courses c  
-                           ON c.course_id = wa.course_id
-                      JOIN time_slots ts 
-                           ON ts.slot_id = tt.slot_id
-                      WHERE tt.day_of_week = @day
-                        AND wa.status = 'Active'
-                      ORDER BY ts.start_time";
-                p = new[]
-                {
-                    new MySqlParameter("@day", today)
-                };
+                // Admin/HOD — view already filters
+                // by today + current semester
+                q = @"SELECT emp_id,
+                     faculty_name  AS FacultyName,
+                     course_title  AS CourseName,
+                     course_code   AS CourseCode,
+                     slot_label    AS TimeSlot,
+                     room          AS Room,
+                     day_of_week   AS DayOfWeek
+              FROM   vw_todays_timetable
+              ORDER  BY start_time ASC";
+
+                p = null;
             }
             else
             {
-                // Faculty — show only their classes
-                q = @"SELECT 
-                        f.name        AS FacultyName,
-                        c.title       AS CourseName,
-                        c.course_code AS CourseCode,
-                        ts.slot_label AS TimeSlot,
-                        tt.room       AS Room,
-                        tt.day_of_week AS DayOfWeek
-                      FROM timetable tt
-                      JOIN workload_assignments wa 
-                           ON wa.wa_id = tt.wa_id
-                      JOIN faculty f  
-                           ON f.emp_id = wa.emp_id
-                      JOIN courses c  
-                           ON c.course_id = wa.course_id
-                      JOIN time_slots ts 
-                           ON ts.slot_id = tt.slot_id
-                      WHERE tt.day_of_week = @day
-                        AND wa.emp_id = @eid
-                        AND wa.status = 'Active'
-                      ORDER BY ts.start_time";
+                // Faculty — filter view by their emp_id
+                q = @"SELECT emp_id,
+                     faculty_name  AS FacultyName,
+                     course_title  AS CourseName,
+                     course_code   AS CourseCode,
+                     slot_label    AS TimeSlot,
+                     room          AS Room,
+                     day_of_week   AS DayOfWeek
+              FROM   vw_todays_timetable
+              WHERE  emp_id = @empId
+              ORDER  BY start_time ASC";
+
                 p = new[]
                 {
-                    new MySqlParameter("@day", today),
-                    new MySqlParameter("@eid", empId.Value)
-                };
+            new MySqlParameter(
+                "@empId", empId.Value)
+        };
             }
-            return DatabaseHelper.ExecuteQuery(q, p);
+
+            return p == null
+                ? DatabaseHelper.ExecuteQuery(q)
+                : DatabaseHelper.ExecuteQuery(q, p);
         }
 
         // ── Pending Leave List (for panel) ────────────────

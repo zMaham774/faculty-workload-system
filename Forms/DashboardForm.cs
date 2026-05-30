@@ -463,12 +463,13 @@ namespace FacultyWorkloadSystem.Forms
             this.Show();
         }
 
-        private void btnTimetable_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show(
-                "Timetable — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        private void btnTimetable_Click(object sender, EventArgs e)
+        {
+            TimetableForm timetableForm = new TimetableForm();
+            this.Hide();
+            timetableForm.ShowDialog();
+            this.Show();
+        }
 
         private void btnAttendance_Click(
             object s, EventArgs e) =>
