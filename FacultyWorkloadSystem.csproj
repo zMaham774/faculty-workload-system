@@ -103,6 +103,7 @@
     <Compile Include="DAL\FacultyDAL.cs" />
     <Compile Include="DAL\SemesterDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="DAL\WorkloadAssignmentDAL.cs" />
     <Compile Include="DAL\WorkloadStandardDAL.cs" />
     <Compile Include="Forms\AcademicCalendarForm.cs">
       <SubType>Form</SubType>
@@ -158,6 +159,12 @@
     <Compile Include="Forms\UserForm.Designer.cs">
       <DependentUpon>UserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\WorkloadAssignmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WorkloadAssignmentForm.Designer.cs">
+      <DependentUpon>WorkloadAssignmentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\WorkloadStandardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +192,7 @@
     <Compile Include="Models\Faculty.cs" />
     <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\WorkloadAssignment.cs" />
     <Compile Include="Models\WorkloadStandard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -211,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserForm.resx">
       <DependentUpon>UserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WorkloadAssignmentForm.resx">
+      <DependentUpon>WorkloadAssignmentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WorkloadStandardForm.resx">
       <DependentUpon>WorkloadStandardForm.cs</DependentUpon>

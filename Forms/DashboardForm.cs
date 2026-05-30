@@ -455,11 +455,13 @@ namespace FacultyWorkloadSystem.Forms
             this.Show();
         }
 
-        private void btnWorkload_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show("Workload — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        private void btnWorkload_Click(object sender, EventArgs e)
+        {
+            WorkloadAssignmentForm workloadForm = new WorkloadAssignmentForm();
+            this.Hide();
+            workloadForm.ShowDialog();
+            this.Show();
+        }
 
         private void btnTimetable_Click(
             object s, EventArgs e) =>

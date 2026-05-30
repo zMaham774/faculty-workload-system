@@ -232,10 +232,10 @@ namespace FacultyWorkloadSystem.DAL
                 SELECT course_id,
                        CONCAT(course_code,
                               ' - ', title)
-                           AS course_label
+                           AS course_display
                 FROM   courses
                 WHERE  is_active = 1
-                ORDER  BY course_code ASC";
+                ORDER  BY title ASC";
 
             return DatabaseHelper.ExecuteQuery(sql);
         }
