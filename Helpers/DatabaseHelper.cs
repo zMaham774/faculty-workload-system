@@ -33,6 +33,7 @@ namespace FacultyWorkloadSystem.Helpers
             {
                 return false;
             }
+
         }
 
         // For SELECT queries — returns a DataTable
@@ -110,5 +111,7 @@ namespace FacultyWorkloadSystem.Helpers
                 }
             }
         }
+
     }
+
 }

@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\AcademicCalendarDAL.cs" />
+    <Compile Include="DAL\AttendanceDAL.cs" />
     <Compile Include="DAL\CourseDAL.cs" />
     <Compile Include="DAL\DashboardDAL.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
@@ -112,6 +113,12 @@
     </Compile>
     <Compile Include="Forms\AcademicCalendarForm.Designer.cs">
       <DependentUpon>AcademicCalendarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AttendanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AttendanceForm.Designer.cs">
+      <DependentUpon>AttendanceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CourseForm.cs">
       <SubType>Form</SubType>
@@ -194,6 +201,7 @@
     <Compile Include="Helpers\SessionManager.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="Models\AcademicCalendar.cs" />
+    <Compile Include="Models\Attendance.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Designation.cs" />

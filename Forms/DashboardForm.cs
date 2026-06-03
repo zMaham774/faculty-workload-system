@@ -229,7 +229,46 @@ namespace FacultyWorkloadSystem.Forms
             {
                 LogManager.LogError(ex);
             }
+            try
+            {
+                panelSchedule.Controls.Clear();
+
+                // FIX: timetable empty ho sakta hai
+                // silently handle karo
+                DataTable dt = null;
+                try
+                {
+                    dt = DashboardDAL
+                        .GetTodaySchedule(
+                            SessionManager.EmpId);
+                }
+                catch
+                {
+                    // Timetable data nahi — no crash
+                    panelSchedule.Controls.Add(
+                        NoData("No classes today."));
+                    return;
+                }
+
+                if (dt == null ||
+                    dt.Rows.Count == 0)
+                {
+                    panelSchedule.Controls.Add(
+                        NoData("No classes today."));
+                    return;
+                }
+
+                // baaki same code...
+            }
+            catch (Exception ex)
+            {
+                LogManager.LogError(ex);
+                panelSchedule.Controls.Clear();
+                panelSchedule.Controls.Add(
+                    NoData("Schedule unavailable."));
+            }
         }
+        
 
         // ── Pending Leaves ─────────────────────────────
         private void LoadPendingLeaves()
@@ -472,17 +511,20 @@ namespace FacultyWorkloadSystem.Forms
         }
 
         private void btnAttendance_Click(
+      object s, EventArgs e)
+        {
+            AttendanceForm form = new AttendanceForm();
+            form.ShowDialog();
+        }
+        private void btnLeaveRequest_Click(
             object s, EventArgs e) =>
+        
             MessageBox.Show(
-                "Attendance — Coming Soon",
+                "Leave Requests — Coming Soon",
                 "Info", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
-        private void btnLeave_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show("Leave — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        
 
         private void btnLeaveApp_Click(
             object s, EventArgs e) =>

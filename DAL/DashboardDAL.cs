@@ -145,5 +145,6 @@ namespace FacultyWorkloadSystem.DAL
                          LIMIT 3";
             return DatabaseHelper.ExecuteQuery(q);
         }
+
     }
 }

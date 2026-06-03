@@ -5,7 +5,8 @@
 			 connectionString="Server=localhost;
                            Database=faculty_workload_db;
                            Uid=YOUR_USERNAME;
-                           Pwd=YOUR_PASSWORD;"
+                           Pwd=YOUR_PASSWORD;
+						   Allow User Variables=True;"
 			 providerName="MySql.Data.MySqlClient"/>
 	</connectionStrings>
 	<startup>

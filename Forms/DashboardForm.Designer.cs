@@ -428,7 +428,7 @@
                 new System.EventHandler(
                     this.btnAttendance_Click);
 
-            // Leave
+            // LeaveRequests
             this.btnLeave.BackColor =
                 System.Drawing.Color.Transparent;
             this.btnLeave.FlatStyle =
@@ -443,7 +443,7 @@
                 new System.Drawing.Point(0, 314);
             this.btnLeave.Size =
                 new System.Drawing.Size(210, 40);
-            this.btnLeave.Text = "  Leave";
+            this.btnLeave.Text = "  Leave Requests";
             this.btnLeave.TextAlign =
                 System.Drawing.ContentAlignment
                 .MiddleLeft;
@@ -454,7 +454,7 @@
                 System.Windows.Forms.Cursors.Hand;
             this.btnLeave.Click +=
                 new System.EventHandler(
-                    this.btnLeave_Click);
+                    this.btnLeaveRequest_Click);
 
             // Leave Approval
             this.btnLeaveApp.BackColor =
