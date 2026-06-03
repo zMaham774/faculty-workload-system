@@ -102,6 +102,7 @@
     <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DAL\DesignationDAL.cs" />
     <Compile Include="DAL\FacultyDAL.cs" />
+    <Compile Include="DAL\LeaveApprovalDAL.cs" />
     <Compile Include="DAL\LeaveRequestDAL.cs" />
     <Compile Include="DAL\SemesterDAL.cs" />
     <Compile Include="DAL\TimeSlotDAL.cs" />
@@ -150,6 +151,12 @@
     </Compile>
     <Compile Include="Forms\FacultyForm.Designer.cs">
       <DependentUpon>FacultyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LeaveApprovalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LeaveApprovalForm.Designer.cs">
+      <DependentUpon>LeaveApprovalForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LeaveRequestForm.cs">
       <SubType>Form</SubType>

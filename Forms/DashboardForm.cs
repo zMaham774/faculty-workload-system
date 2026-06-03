@@ -527,12 +527,25 @@ namespace FacultyWorkloadSystem.Forms
 
 
 
-        private void btnLeaveApp_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show(
-                "Leave Approval — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        private void btnLeaveApproval_Click(
+     object s, EventArgs e)
+        {
+           
+            if (!SessionManager.IsAdmin &&
+                !SessionManager.IsHOD)
+            {
+                MessageBox.Show(
+                    "Access denied.",
+                    "Permission",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            LeaveApprovalForm form =
+                new LeaveApprovalForm();
+            form.ShowDialog();
+        }
 
         private void btnCalendar_Click(object sender, EventArgs e)
         {

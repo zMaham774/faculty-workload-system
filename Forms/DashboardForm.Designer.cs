@@ -483,7 +483,7 @@
                 System.Windows.Forms.Cursors.Hand;
             this.btnLeaveApp.Click +=
                 new System.EventHandler(
-                    this.btnLeaveApp_Click);
+                    this.btnLeaveApproval_Click);
 
             // Calendar
             this.btnCalendar.BackColor =
