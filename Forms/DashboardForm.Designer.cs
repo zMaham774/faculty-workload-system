@@ -454,7 +454,7 @@
                 System.Windows.Forms.Cursors.Hand;
             this.btnLeave.Click +=
                 new System.EventHandler(
-                    this.btnLeaveRequest_Click);
+                    this.btnLeave_Click);
 
             // Leave Approval
             this.btnLeaveApp.BackColor =

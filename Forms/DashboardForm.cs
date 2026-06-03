@@ -516,15 +516,16 @@ namespace FacultyWorkloadSystem.Forms
             AttendanceForm form = new AttendanceForm();
             form.ShowDialog();
         }
-        private void btnLeaveRequest_Click(
-            object s, EventArgs e) =>
-        
-            MessageBox.Show(
-                "Leave Requests — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+      
+        private void btnLeave_Click(
+            object s, EventArgs e)
+        {
+            LeaveRequestForm form =
+                new LeaveRequestForm();
+            form.ShowDialog();
+        }
 
-        
+
 
         private void btnLeaveApp_Click(
             object s, EventArgs e) =>
