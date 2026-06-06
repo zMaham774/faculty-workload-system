@@ -47,7 +47,8 @@ namespace FacultyWorkloadSystem.DAL
                     SELECT COUNT(*)
                     FROM   academic_calendar
                     WHERE  event_date  = @date
-                      AND  is_teaching = 0";
+                      AND  is_teaching = 0
+                      AND    is_deleted  = 0";
 
                 var p = new[]
                 {
@@ -94,6 +95,7 @@ namespace FacultyWorkloadSystem.DAL
                     FROM   academic_calendar
                     WHERE  event_date  = @date
                       AND  is_teaching = 0
+                      AND    is_deleted  = 0 
                     LIMIT  1";
 
                 var p = new[]
@@ -128,6 +130,7 @@ namespace FacultyWorkloadSystem.DAL
         SELECT wa_id
         FROM   workload_assignments
         WHERE  emp_id = @empId
+        AND    is_deleted = 0  
         LIMIT  1";
 
             var pw = new[]
@@ -138,8 +141,17 @@ namespace FacultyWorkloadSystem.DAL
             object waResult =
                 DatabaseHelper.ExecuteScalar(sqlWa, pw);
             object waId = (waResult != null)
-                            ? waResult
-                            : (object)DBNull.Value;
+                ? waResult
+                : (object)DBNull.Value;
+
+            if (waId == (object)DBNull.Value)
+            {
+                LogManager.LogError(new Exception(
+                    $"No workload assignment found " +
+                    $"for emp_id {a.EmpId}. " +
+                    $"Cannot save attendance."));
+                return false;
+            }
 
             string sql = @"
         INSERT INTO attendance_records
@@ -202,15 +214,17 @@ namespace FacultyWorkloadSystem.DAL
                (SELECT wa.wa_id
                 FROM   workload_assignments wa
                 WHERE  wa.emp_id = f.emp_id
+                AND    wa.is_deleted = 0 
+                AND    wa.status     = 'Active'
                 LIMIT  1)       AS wa_id
         FROM   faculty f
-        WHERE  f.is_active = 1
+        WHERE  f.is_active = 1 AND  f.is_deleted = 0
           AND  f.emp_id NOT IN
             (SELECT wa2.emp_id
              FROM   attendance_records ar
              JOIN   workload_assignments wa2
                  ON ar.wa_id    = wa2.wa_id
-             WHERE  ar.att_date = @date)";
+             WHERE  ar.att_date = @date AND wa2.is_deleted = 0)";
 
             var pf = new[]
             {
@@ -279,6 +293,7 @@ namespace FacultyWorkloadSystem.DAL
                      ON ar.wa_id = wa.wa_id
                  WHERE  wa.emp_id   = f.emp_id
                    AND  ar.att_date = @date
+                   AND    wa.is_deleted = 0
                  LIMIT  1), 0
             )                   AS att_id,
             COALESCE(
@@ -288,6 +303,7 @@ namespace FacultyWorkloadSystem.DAL
                      ON ar.wa_id = wa.wa_id
                  WHERE  wa.emp_id   = f.emp_id
                    AND  ar.att_date = @date
+                   AND    wa.is_deleted = 0
                  LIMIT  1), 'Not Marked'
             )                   AS att_status,
             COALESCE(
@@ -297,6 +313,7 @@ namespace FacultyWorkloadSystem.DAL
                      ON ar.wa_id = wa.wa_id
                  WHERE  wa.emp_id   = f.emp_id
                    AND  ar.att_date = @date
+                   AND    wa.is_deleted = 0
                  LIMIT  1), ''
             )                   AS remarks
         FROM   faculty      f
@@ -305,7 +322,8 @@ namespace FacultyWorkloadSystem.DAL
         JOIN   designations des
             ON f.designation_id = des.designation_id
         WHERE  f.is_active = 1
-          AND  f.emp_id    = @empId";
+          AND  f.emp_id    = @empId
+          AND  f.is_deleted = 0";
 
             var p = new[]
             {

@@ -55,6 +55,7 @@ namespace FacultyWorkloadSystem.DAL
                 FROM     users u
                 LEFT JOIN faculty f
                        ON u.emp_id = f.emp_id
+                       AND f.is_deleted = 0
                 ORDER BY u.username ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(sql);
@@ -75,6 +76,7 @@ namespace FacultyWorkloadSystem.DAL
                 FROM     users u
                 LEFT JOIN faculty f
                        ON u.emp_id = f.emp_id
+                       AND f.is_deleted = 0
                 WHERE    u.user_id = @userId";
 
             var p = new[]
@@ -101,7 +103,7 @@ namespace FacultyWorkloadSystem.DAL
                              AS faculty_name
                 FROM     users u
                 LEFT JOIN faculty f
-                       ON u.emp_id = f.emp_id
+                       ON u.emp_id = f.emp_id AND f.is_deleted = 0
                 WHERE    u.username LIKE @kw
                 OR       u.role     LIKE @kw
                 OR       f.name     LIKE @kw

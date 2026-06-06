@@ -358,8 +358,7 @@ namespace FacultyWorkloadSystem.Forms
 
             if (!ValidationHelper.Confirm(
                 "Are you sure you want to delete " +
-                "this department?\n" +
-                "This action cannot be undone."))
+                "this department?\n"))
                 return;
 
             try

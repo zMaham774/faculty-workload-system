@@ -20,6 +20,7 @@ namespace FacultyWorkloadSystem.DAL
                        acad_year, start_date,
                        end_date,  is_current
                 FROM   semesters
+                WHERE  is_deleted = 0
                 ORDER  BY start_date DESC";
 
             DataTable dt =
@@ -38,7 +39,7 @@ namespace FacultyWorkloadSystem.DAL
                        acad_year, start_date,
                        end_date,  is_current
                 FROM   semesters
-                WHERE  sem_id = @id";
+                WHERE  sem_id = @id AND is_deleted = 0";
 
             var p = new[]
             {
@@ -128,8 +129,9 @@ namespace FacultyWorkloadSystem.DAL
         public static bool Delete(int id)
         {
             string sql = @"
-                DELETE FROM semesters
-                WHERE  sem_id = @id";
+        UPDATE semesters
+        SET    is_deleted = 1
+        WHERE  sem_id     = @semId";
 
             var p = new[]
             {
@@ -175,7 +177,8 @@ namespace FacultyWorkloadSystem.DAL
                 SELECT COUNT(*)
                 FROM   semesters
                 WHERE  sem_name = @name
-                  AND  sem_id  != @ex";
+                  AND  sem_id  != @ex
+                  AND    is_deleted = 0";
 
             var p = new[]
             {
@@ -269,6 +272,7 @@ namespace FacultyWorkloadSystem.DAL
                 SELECT sem_id,
                        sem_name
                 FROM   semesters
+                WHERE  is_deleted = 0
                 ORDER  BY sem_id DESC";
 
             return DatabaseHelper.ExecuteQuery(sql);

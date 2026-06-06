@@ -16,6 +16,7 @@ namespace FacultyWorkloadSystem.DAL
                                     hod_name, contact, 
                                     email, is_active
                              FROM   departments
+                             WHERE  is_deleted = 0
                              ORDER  BY dept_name ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(query);
@@ -29,7 +30,7 @@ namespace FacultyWorkloadSystem.DAL
                                     hod_name, contact,
                                     email, is_active
                              FROM   departments
-                             WHERE  is_active = 1
+                             WHERE  is_active = 1 AND  is_deleted = 0
                              ORDER  BY dept_name";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(query);
@@ -40,10 +41,11 @@ namespace FacultyWorkloadSystem.DAL
         public static Department GetById(int deptId)
         {
             string query = @"SELECT dept_id, dept_name,
-                                    hod_name, contact,
-                                    email, is_active
-                             FROM   departments
-                             WHERE  dept_id = @deptId";
+                            hod_name, contact,
+                            email, is_active
+                     FROM   departments
+                     WHERE  dept_id    = @deptId
+                       AND  is_deleted = 0";
 
             MySqlParameter[] parameters =
             {
@@ -62,12 +64,13 @@ namespace FacultyWorkloadSystem.DAL
         public static List<Department> Search(string keyword)
         {
             string query = @"SELECT dept_id, dept_name,
-                                    hod_name, contact,
-                                    email, is_active
-                             FROM   departments
-                             WHERE  dept_name LIKE @keyword
-                             OR     hod_name  LIKE @keyword
-                             ORDER  BY dept_name";
+                            hod_name, contact,
+                            email, is_active
+                     FROM   departments
+                     WHERE  (dept_name LIKE @keyword
+                     OR      hod_name  LIKE @keyword)
+                       AND   is_deleted = 0
+                     ORDER  BY dept_name";
 
             MySqlParameter[] parameters =
             {
@@ -141,8 +144,9 @@ namespace FacultyWorkloadSystem.DAL
         //  Delete department 
         public static bool Delete(int deptId)
         {
-            string query = @"DELETE FROM departments
-                             WHERE  dept_id = @deptId";
+            string query = @"UPDATE departments
+                     SET    is_deleted = 1, is_active = 0
+                     WHERE  dept_id    = @deptId";
 
             MySqlParameter[] parameters =
             {
@@ -176,7 +180,7 @@ namespace FacultyWorkloadSystem.DAL
         public static bool HasFaculty(int deptId)
         {
             string query = @"SELECT COUNT(*) FROM faculty
-                             WHERE  dept_id = @deptId";
+                             WHERE  dept_id = @deptId AND  is_deleted = 0";
 
             MySqlParameter[] parameters =
             {
@@ -220,7 +224,7 @@ namespace FacultyWorkloadSystem.DAL
         SELECT dept_id,
                dept_name
         FROM   departments
-        WHERE  is_active = 1
+        WHERE  is_active = 1 AND  is_deleted = 0
         ORDER  BY dept_name ASC";
 
             return DatabaseHelper.ExecuteQuery(sql);

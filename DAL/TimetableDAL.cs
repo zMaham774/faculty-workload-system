@@ -40,6 +40,8 @@ namespace FacultyWorkloadSystem.DAL
                       ON f.dept_id    = d.dept_id
                 JOIN     time_slots           ts
                       ON tt.slot_id   = ts.slot_id
+                WHERE    tt.is_deleted  = 0 
+                AND      wa.is_deleted  = 0
                 ORDER BY s.sem_name    ASC,
                          f.name        ASC,
                          tt.day_of_week ASC,
@@ -80,12 +82,14 @@ namespace FacultyWorkloadSystem.DAL
                       ON f.dept_id    = d.dept_id
                 JOIN     time_slots           ts
                       ON tt.slot_id   = ts.slot_id
-                WHERE    (@semId = 0
-                          OR wa.sem_id  = @semId)
+                WHERE    tt.is_deleted  = 0    
+                AND      wa.is_deleted  = 0    
+                AND      (@semId = 0
+                  OR wa.sem_id  = @semId)
                 AND      (@empId = 0
-                          OR wa.emp_id  = @empId)
+                  OR wa.emp_id  = @empId)
                 AND      (@day = ''
-                          OR tt.day_of_week = @day)
+                  OR tt.day_of_week = @day)
                 ORDER BY f.name        ASC,
                          tt.day_of_week ASC,
                          ts.start_time  ASC";
@@ -132,7 +136,7 @@ namespace FacultyWorkloadSystem.DAL
                       ON f.dept_id    = d.dept_id
                 JOIN     time_slots           ts
                       ON tt.slot_id   = ts.slot_id
-                WHERE    tt.tt_id     = @ttId";
+                WHERE    tt.tt_id     = @ttId AND tt.is_deleted = 0";
 
             var p = new[]
             {
@@ -203,30 +207,6 @@ namespace FacultyWorkloadSystem.DAL
 
                     insertCmd.ExecuteNonQuery();
 
-                    // Recalculate and
-                    // UPDATE total_hours in
-                    // workload_assignments
-                    // Count slots × credit hours
-                    string updateHoursSql = @"
-                        UPDATE workload_assignments wa
-                        JOIN   courses c
-                               ON wa.course_id =
-                                  c.course_id
-                        SET    wa.total_hours =
-                               (SELECT COUNT(*)
-                                FROM   timetable t
-                                WHERE  t.wa_id =
-                                       wa.wa_id)
-                               * c.credit_hours
-                        WHERE  wa.wa_id = @waId";
-
-                    var updateCmd =
-                        new MySqlCommand(updateHoursSql, conn, transaction);
-
-                    updateCmd.Parameters.AddWithValue("@waId", tt.WaId);
-
-                    updateCmd.ExecuteNonQuery();
-
                     // Commit both together
                     transaction.Commit();
                     return true;
@@ -293,47 +273,29 @@ namespace FacultyWorkloadSystem.DAL
         }
 
         // Delete 
-        public static bool Delete(int ttId,int waId)
+        public static bool Delete(int ttId, int waId)
         {
-            using (var conn = DatabaseHelper.GetConnection())
+            using (var conn =
+                DatabaseHelper.GetConnection())
             {
                 conn.Open();
-
-                MySqlTransaction transaction = conn.BeginTransaction();
+                MySqlTransaction transaction =
+                    conn.BeginTransaction();
 
                 try
                 {
-                    // Step 1 — Delete slot
+                    // Soft delete instead of hard delete
                     string deleteSql = @"
-                        DELETE FROM timetable
-                        WHERE  tt_id = @ttId";
+                UPDATE timetable
+                SET    is_deleted = 1
+                WHERE  tt_id      = @ttId";
 
                     var deleteCmd =
                         new MySqlCommand(
-                            deleteSql, conn,
-                            transaction);
+                            deleteSql, conn, transaction);
                     deleteCmd.Parameters
-                        .AddWithValue(
-                            "@ttId", ttId);
+                        .AddWithValue("@ttId", ttId);
                     deleteCmd.ExecuteNonQuery();
-
-                    // Step 2 — Recalculate hours
-                    string updateSql = @"
-                        UPDATE workload_assignments wa
-                        JOIN   courses c
-                               ON wa.course_id =
-                                  c.course_id
-                        SET    wa.total_hours =
-                               (SELECT COUNT(*)
-                                FROM   timetable t
-                                WHERE  t.wa_id =
-                                       wa.wa_id)
-                               * c.credit_hours
-                        WHERE  wa.wa_id = @waId";
-
-                    var updateCmd = new MySqlCommand(updateSql, conn, transaction);
-                    updateCmd.Parameters.AddWithValue("@waId", waId);
-                    updateCmd.ExecuteNonQuery();
 
                     transaction.Commit();
                     return true;
@@ -439,6 +401,8 @@ namespace FacultyWorkloadSystem.DAL
                 JOIN     semesters s
                       ON wa.sem_id    = s.sem_id
                 WHERE    wa.status   = 'Active'
+                AND      wa.is_deleted = 0 
+                AND      s.is_deleted  = 0 
                 ORDER BY s.sem_name  ASC,
                          f.name      ASC";
 

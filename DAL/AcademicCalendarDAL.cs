@@ -25,6 +25,7 @@ namespace FacultyWorkloadSystem.DAL
                 FROM     academic_calendar ac
                 JOIN     semesters s
                       ON ac.sem_id = s.sem_id
+                WHERE    ac.is_deleted = 0
                 ORDER BY ac.event_date ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(sql);
@@ -47,7 +48,9 @@ namespace FacultyWorkloadSystem.DAL
                 FROM     academic_calendar ac
                 JOIN     semesters s
                       ON ac.sem_id = s.sem_id
-                WHERE    ac.sem_id = @semId
+                WHERE    ac.sem_id = @semId 
+                AND ac.is_deleted = 0 
+                AND s.is_deleted = 0
                 ORDER BY ac.event_date ASC";
 
             var p = new[]
@@ -76,7 +79,7 @@ namespace FacultyWorkloadSystem.DAL
                 FROM     academic_calendar ac
                 JOIN     semesters s
                       ON ac.sem_id = s.sem_id
-                WHERE    ac.cal_id = @calId";
+                WHERE    ac.cal_id = @calId AND ac.is_deleted = 0";
 
             var p = new[]
             {
@@ -100,7 +103,8 @@ namespace FacultyWorkloadSystem.DAL
                 FROM   academic_calendar
                 WHERE  sem_id     = @semId
                 AND    event_date = @date
-                AND    is_teaching = 0";
+                AND    is_teaching = 0
+                AND    is_deleted  = 0";
 
             var p = new[]
             {
@@ -134,6 +138,8 @@ namespace FacultyWorkloadSystem.DAL
                 JOIN     semesters s
                       ON ac.sem_id = s.sem_id
                 WHERE    ac.sem_id     = @semId
+                AND      ac.is_deleted = 0
+                AND      s.is_deleted = 0
                 AND      ac.event_date = @date
                 LIMIT    1";
 
@@ -238,8 +244,9 @@ namespace FacultyWorkloadSystem.DAL
         public static bool Delete(int calId)
         {
             string sql = @"
-                DELETE FROM academic_calendar
-                WHERE  cal_id = @calId";
+        UPDATE academic_calendar
+        SET    is_deleted = 1
+        WHERE  cal_id     = @calId";
 
             var p = new[]
             {
@@ -258,7 +265,8 @@ namespace FacultyWorkloadSystem.DAL
                 WHERE  sem_id     = @semId
                 AND    event_date = @date
                 AND    event_type = @eventType
-                AND    cal_id    != @excludeId";
+                AND    cal_id    != @excludeId
+                AND    is_deleted  = 0";
 
             var p = new[]
             {

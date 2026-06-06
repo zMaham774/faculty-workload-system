@@ -62,12 +62,15 @@ namespace FacultyWorkloadSystem.DAL
                       ON wa.sem_id    = s.sem_id
                 JOIN     departments d
                       ON f.dept_id    = d.dept_id
-                WHERE    (@semId  = 0
-                          OR wa.sem_id  = @semId)
+                WHERE    wa.is_deleted = 0
+                AND      f.is_deleted  = 0
+                AND      c.is_deleted  = 0
+                AND      s.is_deleted  = 0
+                AND      (@semId  = 0
+                  OR wa.sem_id  = @semId)
                 AND      (@deptId = 0
-                          OR f.dept_id = @deptId)
-                ORDER BY f.name ASC,
-                         c.title ASC";
+                  OR f.dept_id = @deptId)
+                ORDER BY f.name ASC, c.title ASC";
 
             var p = new[]
             {
@@ -105,7 +108,11 @@ namespace FacultyWorkloadSystem.DAL
                       ON wa.sem_id    = s.sem_id
                 JOIN     departments d
                       ON f.dept_id    = d.dept_id
-                WHERE    wa.wa_id     = @waId";
+                WHERE    wa.wa_id      = @waId
+                AND      wa.is_deleted = 0
+                AND      f.is_deleted  = 0
+                AND      c.is_deleted  = 0
+                AND      s.is_deleted  = 0";
 
             var p = new[]
             {
@@ -288,8 +295,9 @@ namespace FacultyWorkloadSystem.DAL
         public static bool Delete(int waId)
         {
             string sql = @"
-                DELETE FROM workload_assignments
-                WHERE  wa_id = @waId";
+        UPDATE workload_assignments
+        SET    is_deleted = 1
+        WHERE  wa_id      = @waId";
 
             var p = new[]
             {
@@ -308,7 +316,8 @@ namespace FacultyWorkloadSystem.DAL
                 WHERE  emp_id    = @empId
                 AND    course_id = @courseId
                 AND    sem_id    = @semId
-                AND    wa_id    != @excludeId";
+                AND    wa_id    != @excludeId
+                AND    is_deleted  = 0";
 
             var p = new[]
             {
@@ -338,7 +347,8 @@ namespace FacultyWorkloadSystem.DAL
                 WHERE  emp_id  = @empId
                 AND    sem_id  = @semId
                 AND    wa_id  != @excludeId
-                AND    status  = 'Active'";
+                AND    status  = 'Active'
+                AND    is_deleted  = 0";
 
             var p = new[]
             {

@@ -26,6 +26,7 @@ namespace FacultyWorkloadSystem.DAL
                       ON ws.dept_id = d.dept_id
                 JOIN     semesters   s
                       ON ws.sem_id  = s.sem_id
+                WHERE    d.is_deleted = 0
                 ORDER BY d.dept_name ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(sql);
@@ -49,7 +50,7 @@ namespace FacultyWorkloadSystem.DAL
                       ON ws.dept_id = d.dept_id
                 JOIN     semesters   s
                       ON ws.sem_id  = s.sem_id
-                WHERE    ws.ws_id   = @wsId";
+                WHERE    ws.ws_id   = @wsId AND d.is_deleted = 0";
 
             var p = new[]
             {
@@ -80,8 +81,9 @@ namespace FacultyWorkloadSystem.DAL
                       ON ws.dept_id = d.dept_id
                 JOIN     semesters   s
                       ON ws.sem_id  = s.sem_id
-                WHERE    d.dept_name LIKE @kw
-                OR       s.sem_name  LIKE @kw
+                WHERE    d.is_deleted = 0
+                AND   (d.dept_name LIKE @kw
+                OR s.sem_name  LIKE @kw)
                 ORDER BY ws.ws_id ASC";
 
             var p = new[]
@@ -214,8 +216,9 @@ namespace FacultyWorkloadSystem.DAL
                       ON ws.dept_id = d.dept_id
                 JOIN     semesters   s
                       ON ws.sem_id  = s.sem_id
-                WHERE    ws.dept_id = @deptId
-                AND      ws.sem_id  = @semId";
+                WHERE    ws.dept_id   = @deptId
+                AND    ws.sem_id    = @semId
+                AND    d.is_deleted = 0";
 
             var p = new[]
             {

@@ -26,6 +26,7 @@ namespace FacultyWorkloadSystem.DAL
                        is_active,
                        status
                 FROM   vw_faculty_details
+                WHERE  is_deleted = 0
                 ORDER BY name ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(sql);
@@ -94,7 +95,7 @@ namespace FacultyWorkloadSystem.DAL
                        is_active,
                        status
                 FROM   vw_faculty_details
-                WHERE  emp_id = @empId";
+                WHERE  emp_id = @empId AND is_deleted = 0";
 
             var p = new[]
             {
@@ -291,8 +292,9 @@ namespace FacultyWorkloadSystem.DAL
         public static bool Delete(int empId)
         {
             string sql = @"
-                DELETE FROM faculty
-                WHERE  emp_id = @empId";
+        UPDATE faculty
+        SET    is_deleted = 1, is_active = 0
+        WHERE  emp_id  = @empId";
 
             var p = new[]
             {
@@ -312,7 +314,7 @@ namespace FacultyWorkloadSystem.DAL
                 SELECT COUNT(*)
                 FROM   faculty
                 WHERE  name    = @name
-                  AND  emp_id != @excludeId";
+                  AND  emp_id != @excludeId AND  is_deleted = 0";
 
             var p = new[]
             {
@@ -389,7 +391,7 @@ namespace FacultyWorkloadSystem.DAL
         SELECT emp_id,
                name
         FROM   faculty
-        WHERE  is_active = 1
+        WHERE  is_active = 1 AND  is_deleted = 0
         ORDER  BY name ASC";
 
             return DatabaseHelper.ExecuteQuery(sql);
@@ -401,7 +403,7 @@ namespace FacultyWorkloadSystem.DAL
             // Get faculty name first
             string getName = @"
         SELECT name FROM faculty
-        WHERE  emp_id = @empId";
+        WHERE  emp_id = @empId AND  is_deleted = 0";
 
             var p = new[]
             {

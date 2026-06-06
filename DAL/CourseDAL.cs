@@ -24,7 +24,8 @@ namespace FacultyWorkloadSystem.DAL
                 FROM   courses c
                 JOIN   departments d
                     ON c.dept_id = d.dept_id
-                ORDER  BY c.course_id ASC";
+                WHERE  c.is_deleted = 0
+                ORDER  BY c.course_code ASC";
 
             DataTable dt =
                 DatabaseHelper.ExecuteQuery(sql);
@@ -50,7 +51,7 @@ namespace FacultyWorkloadSystem.DAL
                 FROM   courses c
                 JOIN   departments d
                     ON c.dept_id = d.dept_id
-                WHERE  c.course_id = @id";
+                WHERE  c.course_id = @id AND c.is_deleted = 0";
 
             var p = new[]
             {
@@ -135,8 +136,9 @@ namespace FacultyWorkloadSystem.DAL
         public static bool Delete(int id)
         {
             string sql = @"
-                DELETE FROM courses
-                WHERE  course_id = @id";
+        UPDATE courses
+        SET    is_deleted = 1, is_active = 0
+        WHERE  course_id  = @id";
 
             var p = new[]
             {
@@ -155,7 +157,7 @@ namespace FacultyWorkloadSystem.DAL
                 SELECT COUNT(*)
                 FROM   courses
                 WHERE  course_code = @code
-                  AND  course_id  != @ex";
+                  AND  course_id  != @ex AND  is_deleted  = 0";
 
             var p = new[]
             {
@@ -202,12 +204,10 @@ namespace FacultyWorkloadSystem.DAL
                 FROM   courses c
                 JOIN   departments d
                     ON c.dept_id = d.dept_id
-                WHERE  c.course_code
-                           LIKE @kw
-                    OR c.title
-                           LIKE @kw
-                    OR d.dept_name
-                           LIKE @kw
+                WHERE  c.is_deleted = 0
+                AND (c.course_code LIKE @kw
+                OR c.title       LIKE @kw
+                OR d.dept_name   LIKE @kw)
                 ORDER  BY c.course_code ASC";
 
             var p = new[]
@@ -234,7 +234,7 @@ namespace FacultyWorkloadSystem.DAL
                               ' - ', title)
                            AS course_display
                 FROM   courses
-                WHERE  is_active = 1
+                WHERE  is_active = 1 AND  is_deleted = 0
                 ORDER  BY title ASC";
 
             return DatabaseHelper.ExecuteQuery(sql);

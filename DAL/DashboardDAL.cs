@@ -52,7 +52,7 @@ namespace FacultyWorkloadSystem.DAL
         {
             string q = @"SELECT sem_name 
                          FROM semesters 
-                         WHERE is_current = 1 
+                         WHERE is_current = 1 AND is_deleted = 0  
                          LIMIT 1";
             object r = DatabaseHelper.ExecuteScalar(q);
             return r == null ? "No Active Semester" : r.ToString();

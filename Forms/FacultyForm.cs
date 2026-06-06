@@ -337,6 +337,12 @@ namespace FacultyWorkloadSystem.Forms
                 return false;
             }
 
+            if (FacultyDAL.NameExists(txtName.Text.Trim(), _editingId))
+            {
+                ValidationHelper.ShowError("Faculty with this name " + "already exists.");
+                return false;
+            }
+
             if (!ValidationHelper.IsValidName(
                     txtName.Text.Trim()))
             {

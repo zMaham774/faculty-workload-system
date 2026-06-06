@@ -51,105 +51,91 @@ namespace FacultyWorkloadSystem.DAL
         }
 
         // ── Search / Filter ───────────────────────
-        public static List<LeaveRequest>
-            GetFiltered(
-                string status,
-                string keyword)
+        public static List<LeaveRequest> GetFiltered(string status, string keyword, string userRole, int loggedInEmpId)
         {
             string sql = @"
-                SELECT lr_id, emp_id,
-                       faculty_name, dept_name,
-                       leave_type_name,
-                       start_date, end_date,
-                       total_days, reason,
-                       status, approval_remarks,
-                       applied_on
-                FROM   vw_leave_requests
-                WHERE  1 = 1";
+        SELECT lr_id, emp_id,
+               faculty_name, dept_name,
+               leave_type_name,
+               start_date, end_date,
+               total_days, reason,
+               status, approval_remarks,
+               applied_on
+        FROM   vw_leave_requests
+        WHERE  1 = 1";
 
-            var pList =
-                new List<MySqlParameter>();
+            var pList = new List<MySqlParameter>();
 
-            if (!string.IsNullOrEmpty(status)
-                && status != "All")
+            // Enforce role-based isolation early in the query configuration
+            if (userRole == "HOD")
+            {
+                sql += " AND emp_id != @loggedInEmpId";
+                pList.Add(new MySqlParameter("@loggedInEmpId", loggedInEmpId));
+            }
+
+            if (!string.IsNullOrEmpty(status) && status != "All")
             {
                 sql += " AND status = @st";
-                pList.Add(new MySqlParameter(
-                    "@st", status));
+                pList.Add(new MySqlParameter("@st", status));
             }
 
             if (!string.IsNullOrEmpty(keyword))
             {
                 sql += @" AND (
-                    faculty_name LIKE @kw OR
-                    dept_name    LIKE @kw OR
-                    leave_type_name LIKE @kw)";
-                pList.Add(new MySqlParameter(
-                    "@kw", "%" + keyword + "%"));
+            faculty_name    LIKE @kw OR
+            dept_name       LIKE @kw OR
+            leave_type_name LIKE @kw)";
+                pList.Add(new MySqlParameter("@kw", "%" + keyword + "%"));
             }
 
             sql += " ORDER BY applied_on DESC";
 
-            DataTable dt =
-                DatabaseHelper.ExecuteQuery(
-                    sql, pList.ToArray());
-
+            DataTable dt = DatabaseHelper.ExecuteQuery(sql, pList.ToArray());
             return MapList(dt);
         }
 
         // ── Approve ───────────────────────────────
-        public static bool Approve(
-            int lrId,
-            string remarks,
-            int approvedBy)
+        public static bool Approve(int lrId, string remarks, int approvedBy)
         {
             string sql = @"
-                UPDATE leave_requests
-                SET    appr_status  = 'Approved',
-                       appr_remarks = @rem,
-                       approved_by  = @uid,
-                       approved_on  = NOW()
-                WHERE  lr_id        = @id
-                  AND  appr_status  = 'Pending'";
+        UPDATE leave_requests
+        SET    appr_status  = 'Approved',
+               appr_remarks = @rem,
+               approved_by  = @uid
+        WHERE  lr_id        = @id
+          AND  appr_status  = 'Pending'";
 
             var p = new[]
             {
-                new MySqlParameter("@rem", remarks),
-                new MySqlParameter(
-                    "@uid", approvedBy),
-                new MySqlParameter("@id", lrId)
-            };
+        new MySqlParameter("@rem", remarks),
+        new MySqlParameter("@uid", approvedBy),
+        new MySqlParameter("@id",  lrId)
+    };
 
-            return DatabaseHelper
-                .ExecuteNonQuery(sql, p) > 0;
+            return DatabaseHelper.ExecuteNonQuery(sql, p) > 0;
         }
 
-        // ── Reject ────────────────────────────────
-        public static bool Reject(
-            int lrId,
-            string remarks,
-            int rejectedBy)
+        public static bool Reject(int lrId, string remarks, int rejectedBy)
         {
             string sql = @"
-                UPDATE leave_requests
-                SET    appr_status  = 'Rejected',
-                       appr_remarks = @rem,
-                       approved_by  = @uid,
-                       approved_on  = NOW()
-                WHERE  lr_id        = @id
-                  AND  appr_status  = 'Pending'";
+        UPDATE leave_requests
+        SET    appr_status  = 'Rejected',
+               appr_remarks = @rem,
+               approved_by  = @uid
+        WHERE  lr_id        = @id
+          AND  appr_status  = 'Pending'";
 
             var p = new[]
             {
-                new MySqlParameter("@rem", remarks),
-                new MySqlParameter(
-                    "@uid", rejectedBy),
-                new MySqlParameter("@id", lrId)
-            };
+        new MySqlParameter("@rem", remarks),
+        new MySqlParameter("@uid", rejectedBy),
+        new MySqlParameter("@id",  lrId)
+    };
 
-            return DatabaseHelper
-                .ExecuteNonQuery(sql, p) > 0;
+            return DatabaseHelper.ExecuteNonQuery(sql, p) > 0;
         }
+
+        
 
         // ── Private mapper ────────────────────────
         private static List<LeaveRequest>

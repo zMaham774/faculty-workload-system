@@ -217,15 +217,14 @@ namespace FacultyWorkloadSystem.Forms
         {
             try
             {
-                string status =
-                    cboFilter.SelectedItem?
-                    .ToString() ?? "All";
-                string kw =
-                    txtSearch.Text.Trim();
+                string status = cboFilter.SelectedItem?.ToString() ?? "All";
+                string kw = txtSearch.Text.Trim();
 
-                List<LeaveRequest> list =
-                    LeaveApprovalDAL
-                    .GetFiltered(status, kw);
+                // Pass current logged-in role and Employee ID to filter out HOD requests securely
+                string currentRole = SessionManager.Role;
+                int currentEmpId = SessionManager.EmpId ?? 0;
+
+                List<LeaveRequest> list = LeaveApprovalDAL.GetFiltered(status, kw, currentRole, currentEmpId);
 
                 PopulateGrid(list);
                 UpdateCountLabel(list.Count);
@@ -308,51 +307,44 @@ namespace FacultyWorkloadSystem.Forms
         // ══════════════════════════════════════════
         //  CELL CLICK — Approve / Reject
         // ══════════════════════════════════════════
-        private void dgvApproval_CellClick(
-            object sender,
-            DataGridViewCellEventArgs e)
+        private void dgvApproval_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            int approveIdx =
-                dgvApproval
-                .Columns["colApprove"].Index;
-            int rejectIdx =
-                dgvApproval
-                .Columns["colReject"].Index;
+            // 1. Identify specific column positions safely by name
+            int approveIdx = dgvApproval.Columns.Contains("colApprove") ? dgvApproval.Columns["colApprove"].Index : -1;
+            int rejectIdx = dgvApproval.Columns.Contains("colReject") ? dgvApproval.Columns["colReject"].Index : -1;
 
-            string status =
-                dgvApproval.Rows[e.RowIndex]
-                    .Cells["colStatus"]
-                    .Value?.ToString() ?? "";
+            // 2. Read the Status value of the current row safely
+            string status = dgvApproval.Rows[e.RowIndex].Cells["colStatus"].Value?.ToString() ?? "";
 
+            // 3. CRITICAL SECURITY GUARD: If the request is already processed...
             if (status != "Pending")
             {
-                if (e.ColumnIndex == approveIdx
-                 || e.ColumnIndex == rejectIdx)
+                // If they click on the invisible "Accept" or "Reject" spaces, just block it silently
+                if (e.ColumnIndex == approveIdx || e.ColumnIndex == rejectIdx)
                 {
-                    ValidationHelper.ShowError(
-                        "This request has already " +
-                        "been " + status + ".");
+                    // By doing nothing here and just returning, the application completely ignores 
+                    // the click on already approved/rejected rows, so no annoying error dialogs appear!
+                    return;
                 }
+
+                // Let them click other standard data cells if needed, or simply return:
                 return;
             }
 
-            int lrId = Convert.ToInt32(
-                dgvApproval.Rows[e.RowIndex]
-                    .Cells["colId"].Value);
-
-            string facultyName =
-                dgvApproval.Rows[e.RowIndex]
-                    .Cells["colFaculty"]
-                    .Value?.ToString() ?? "";
+            // 4. Process genuine Pending actions
+            int lrId = Convert.ToInt32(dgvApproval.Rows[e.RowIndex].Cells["colId"].Value);
+            string facultyName = dgvApproval.Rows[e.RowIndex].Cells["colFaculty"].Value?.ToString() ?? "";
 
             if (e.ColumnIndex == approveIdx)
-                ShowApproveDialog(
-                    lrId, facultyName, true);
+            {
+                ShowApproveDialog(lrId, facultyName, true);
+            }
             else if (e.ColumnIndex == rejectIdx)
-                ShowApproveDialog(
-                    lrId, facultyName, false);
+            {
+                ShowApproveDialog(lrId, facultyName, false);
+            }
         }
 
         // ══════════════════════════════════════════
@@ -581,6 +573,67 @@ namespace FacultyWorkloadSystem.Forms
             object sender, MouseEventArgs e)
         {
             _isDragging = false;
+        }
+
+        private void dgvLeaveApprovals_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            int approveIdx = dgvApproval.Columns.Contains("colApprove") ? dgvApproval.Columns["colApprove"].Index : -1;
+            int rejectIdx = dgvApproval.Columns.Contains("colReject") ? dgvApproval.Columns["colReject"].Index : -1;
+            int statusIdx = dgvApproval.Columns.Contains("colStatus") ? dgvApproval.Columns["colStatus"].Index : -1;
+
+            if (statusIdx == -1 && dgvApproval.Columns.Contains("Status"))
+                statusIdx = dgvApproval.Columns["Status"].Index;
+
+            string currentStatus = "";
+            if (statusIdx >= 0 && dgvApproval.Rows[e.RowIndex].Cells[statusIdx].Value != null)
+            {
+                currentStatus = dgvApproval.Rows[e.RowIndex].Cells[statusIdx].Value.ToString();
+            }
+
+            // Process Action Button Columns Visuals
+            if (e.ColumnIndex == approveIdx || e.ColumnIndex == rejectIdx)
+            {
+                if (currentStatus != "Pending" && !string.IsNullOrEmpty(currentStatus))
+                {
+                    // SAFE ALTERNATIVE: Paint the button to perfectly match the row background 
+                    // making it look completely flat, empty, and hidden without changing the structural cell type.
+                    Color rowBgColor = (e.RowIndex % 2 == 0) ? Color.White : Color.FromArgb(240, 248, 255);
+
+                    e.Value = ""; // Remove text ("Accept"/"Reject")
+                    e.CellStyle.BackColor = rowBgColor;
+                    e.CellStyle.ForeColor = rowBgColor;
+                    e.CellStyle.SelectionBackColor = rowBgColor;
+                    e.CellStyle.SelectionForeColor = rowBgColor;
+
+                    // Flat style helps hide the native button borders completely
+                    if (dgvApproval.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewButtonCell btnCell)
+                    {
+                        btnCell.FlatStyle = FlatStyle.Flat;
+                    }
+                }
+                else // Row IS Pending, show your clean action highlights
+                {
+                    if (dgvApproval.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewButtonCell btnCell)
+                    {
+                        btnCell.FlatStyle = FlatStyle.Standard; // Restores 3D button appearance
+                    }
+
+                    if (e.ColumnIndex == approveIdx)
+                    {
+                        e.CellStyle.BackColor = Color.FromArgb(13, 140, 106); // Forest Green
+                        e.CellStyle.ForeColor = Color.White;
+                        e.CellStyle.SelectionBackColor = Color.FromArgb(13, 140, 106);
+                    }
+                    else if (e.ColumnIndex == rejectIdx)
+                    {
+                        e.CellStyle.BackColor = Color.FromArgb(220, 53, 69); // Crimson Red
+                        e.CellStyle.ForeColor = Color.White;
+                        e.CellStyle.SelectionBackColor = Color.FromArgb(220, 53, 69);
+                    }
+                }
+            }
         }
     }
 }

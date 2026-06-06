@@ -18,7 +18,7 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMaximize = new System.Windows.Forms.ToolStripMenuItem();
@@ -242,8 +242,8 @@
             // 
             this.dgvApproval.AllowUserToAddRows = false;
             this.dgvApproval.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.AliceBlue;
-            this.dgvApproval.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
+            this.dgvApproval.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvApproval.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -260,6 +260,7 @@
             this.dgvApproval.Size = new System.Drawing.Size(1340, 615);
             this.dgvApproval.TabIndex = 3;
             this.dgvApproval.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvApproval_CellClick);
+            this.dgvApproval.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvLeaveApprovals_CellFormatting);
             // 
             // LeaveApprovalForm
             // 
