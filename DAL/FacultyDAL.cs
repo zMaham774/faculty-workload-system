@@ -26,7 +26,7 @@ namespace FacultyWorkloadSystem.DAL
                        is_active,
                        status
                 FROM   vw_faculty_details
-                ORDER BY emp_id ASC";
+                ORDER BY name ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(sql);
             return MapToList(dt);

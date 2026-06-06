@@ -35,9 +35,9 @@ namespace FacultyWorkloadSystem.Forms
             catch { }
             try
             {
-                SetNavIcon(picDashboard, Properties.Resources.ic_dashboard, btnDashboard, 6);
+                SetNavIcon(picDashboard, Properties.Resources.ic_dashboard, btnDashboard);
 
-                SetNavIcon(picLogout, Properties.Resources.ic_logout, btnLogout, 2);
+                SetNavIcon(picLogout, Properties.Resources.ic_logout, btnLogout);
             }
             catch (Exception ex)
             {
@@ -72,48 +72,20 @@ namespace FacultyWorkloadSystem.Forms
 
             try
             {
-                SetNavIcon(picDashboard,
-                    Properties.Resources.ic_dashboard,
-                    btnDashboard, 6);
-                SetNavIcon(picFaculty,
-                    Properties.Resources.ic_faculty,
-                    btnFaculty, 50);
-                SetNavIcon(picDepts,
-                    Properties.Resources.ic_department,
-                    btnDepts, 94);
-                SetNavIcon(picCourses,
-                    Properties.Resources.ic_courses,
-                    btnCourses, 138);
-                SetNavIcon(picWorkload,
-                    Properties.Resources.ic_workload,
-                    btnWorkload, 182);
-                SetNavIcon(picTimetable,
-                    Properties.Resources.ic_timetable,
-                    btnTimetable, 226);
-                SetNavIcon(picAttendance,
-                    Properties.Resources.ic_attendance,
-                    btnAttendance, 270);
-                SetNavIcon(picLeave,
-                    Properties.Resources.ic_leave,
-                    btnLeave, 314);
-                SetNavIcon(picLeaveApp,
-                    Properties.Resources.ic_leaveapp,
-                    btnLeaveApp, 358);
-                SetNavIcon(picCalendar,
-                    Properties.Resources.ic_calender,
-                    btnCalendar, 402);
-                SetNavIcon(picReports,
-                    Properties.Resources.ic_reports,
-                    btnReports, 446);
-                SetNavIcon(picUsers,
-                    Properties.Resources.ic_user,
-                    btnUsers, 490);
-                SetNavIcon(picSemesters,
-                    Properties.Resources.ic_semester,
-                    btnSemesters, 534);
-                SetNavIcon(picLogout,
-                    Properties.Resources.ic_logout,
-                    btnLogout, 2);
+                SetNavIcon(picDashboard, Properties.Resources.ic_dashboard, btnDashboard);
+                SetNavIcon(picFaculty, Properties.Resources.ic_faculty, btnFaculty);
+                SetNavIcon(picDepts, Properties.Resources.ic_department, btnDepts);
+                SetNavIcon(picCourses, Properties.Resources.ic_courses, btnCourses);
+                SetNavIcon(picWorkload, Properties.Resources.ic_workload, btnWorkload);
+                SetNavIcon(picTimetable, Properties.Resources.ic_timetable, btnTimetable);
+                SetNavIcon(picAttendance, Properties.Resources.ic_attendance, btnAttendance);
+                SetNavIcon(picLeave, Properties.Resources.ic_leave, btnLeave);
+                SetNavIcon(picLeaveApp, Properties.Resources.ic_leaveapp, btnLeaveApp);
+                SetNavIcon(picCalendar, Properties.Resources.ic_calender, btnCalendar);
+                SetNavIcon(picReports, Properties.Resources.ic_reports, btnReports);
+                SetNavIcon(picUsers, Properties.Resources.ic_user, btnUsers);
+                SetNavIcon(picSemesters, Properties.Resources.ic_semester, btnSemesters);
+                SetNavIcon(picLogout, Properties.Resources.ic_logout, btnLogout);
             }
             catch { }
         }
@@ -450,23 +422,58 @@ namespace FacultyWorkloadSystem.Forms
             bool isAdmin = (role == "Admin");
             bool isHOD = (role == "HOD");
 
-            // Admin only
-            btnFaculty.Visible = isAdmin;
-            btnDepts.Visible = isAdmin;
-            btnCalendar.Visible = isAdmin;
-            btnUsers.Visible = isAdmin;
-            btnSemesters.Visible = isAdmin;
+            if (isAdmin)
+            {
+                btnFaculty.Visible = true;
+                btnDepts.Visible = true;
+                btnCourses.Visible = true;
+                btnSemesters.Visible = true;
+                btnUsers.Visible = true;
+                btnWorkload.Visible = true;
+                btnCalendar.Visible = true;
+                btnTimetable.Visible = true;
+                btnAttendance.Visible = true;
+                btnLeave.Visible = false; // Admin doesn't submit leave
+                btnLeaveApp.Visible = true;
+                btnReports.Visible = true;
+            }
+            else if (isHOD)
+            {
+                btnFaculty.Visible = true;
+                btnDepts.Visible = false;
+                btnCourses.Visible = true;
+                btnSemesters.Visible = false;
+                btnUsers.Visible = false;
+                btnWorkload.Visible = true;
+                btnCalendar.Visible = true;
+                btnTimetable.Visible = true;
+                btnAttendance.Visible = true;
+                btnLeave.Visible = true;  // HOD can submit leave
+                btnLeaveApp.Visible = true;
+                btnReports.Visible = true;
+            }
+            else // Faculty
+            {
+                btnFaculty.Visible = false;
+                btnDepts.Visible = false;
+                btnCourses.Visible = false;
+                btnSemesters.Visible = false;
+                btnUsers.Visible = false;
+                btnWorkload.Visible = false;
+                btnCalendar.Visible = false;
+                btnTimetable.Visible = true;
+                btnAttendance.Visible = true;
+                btnLeave.Visible = true;  // Faculty submits leave
+                btnLeaveApp.Visible = false;
+                btnReports.Visible = false;
+            }
 
-            // Admin + HOD
-            btnCourses.Visible = isAdmin || isHOD;
-            btnWorkload.Visible = isAdmin || isHOD;
-            btnLeaveApp.Visible = isAdmin || isHOD;
-            btnReports.Visible = isAdmin || isHOD;
+            RepositionSidebarButtons();
 
-            // Everyone
-            btnTimetable.Visible = true;
-            btnAttendance.Visible = true;
-            btnLeave.Visible = true;
+            // Hide approval-related panels for Faculty
+            bool canApprove = isAdmin || isHOD;
+            cardLeaves.Visible = canApprove;  // Pending Leaves stat card
+            panelLeavesCard.Visible = canApprove;  // Pending Leave Requests panel
         }
 
         // ── Nav Clicks ─────────────────────────────────
@@ -514,21 +521,23 @@ namespace FacultyWorkloadSystem.Forms
       object s, EventArgs e)
         {
             AttendanceForm form = new AttendanceForm();
+            this.Hide();
             form.ShowDialog();
+            this.Show();
         }
       
         private void btnLeave_Click(
             object s, EventArgs e)
         {
-            LeaveRequestForm form =
-                new LeaveRequestForm();
+            LeaveRequestForm form = new LeaveRequestForm();
+            this.Hide();
             form.ShowDialog();
+            this.Show();
         }
 
 
 
-        private void btnLeaveApproval_Click(
-     object s, EventArgs e)
+        private void btnLeaveApproval_Click( object s, EventArgs e)
         {
            
             if (!SessionManager.IsAdmin &&
@@ -542,9 +551,10 @@ namespace FacultyWorkloadSystem.Forms
                 return;
             }
 
-            LeaveApprovalForm form =
-                new LeaveApprovalForm();
+            LeaveApprovalForm form = new LeaveApprovalForm();
+            this.Hide();
             form.ShowDialog();
+            this.Show();
         }
 
         private void btnCalendar_Click(object sender, EventArgs e)
@@ -652,27 +662,60 @@ namespace FacultyWorkloadSystem.Forms
         }
 
         private void SetNavIcon(
-         System.Windows.Forms.PictureBox pic,
-         System.Drawing.Image img,
-         System.Windows.Forms.Button btn,
-         int yPos)
+    PictureBox pic,
+    Image img,
+    Button btn)
         {
             if (img == null) return;
 
             pic.Image = img;
             pic.Size = new Size(18, 18);
-
-            pic.Location = new Point(14, (btn.Height - pic.Height) / 2);
-            pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            pic.SizeMode = PictureBoxSizeMode.StretchImage;
             pic.BackColor = Color.Transparent;
 
+            // Y will be set by RepositionSidebarButtons
+            pic.Location = new Point(14,
+                (btn.Height - pic.Height) / 2);
 
             btn.Controls.Add(pic);
-
-
             pic.BringToFront();
+            btn.Padding = new Padding(36, 0, 0, 0);
+        }
 
-            btn.Padding = new System.Windows.Forms.Padding(36, 0, 0, 0);
+        private void RepositionSidebarButtons()
+        {
+            var navButtons = new[]
+            {
+        (btn: btnFaculty,    pic: picFaculty),
+        (btn: btnDepts,      pic: picDepts),
+        (btn: btnCourses,    pic: picCourses),
+        (btn: btnWorkload,   pic: picWorkload),
+        (btn: btnTimetable,  pic: picTimetable),
+        (btn: btnAttendance, pic: picAttendance),
+        (btn: btnLeave,      pic: picLeave),
+        (btn: btnLeaveApp,   pic: picLeaveApp),
+        (btn: btnCalendar,   pic: picCalendar),
+        (btn: btnReports,    pic: picReports),
+        (btn: btnUsers,      pic: picUsers),
+        (btn: btnSemesters,  pic: picSemesters),
+    };
+
+            int startY = 50;  // Y position of first nav button
+            int gap = 44;  // height of each button slot
+            int y = startY;
+
+            foreach (var item in navButtons)
+            {
+                if (!item.btn.Visible) continue;
+
+                item.btn.Location = new Point(
+                    item.btn.Location.X, y);
+                item.pic.Location = new Point(
+                    item.pic.Location.X,
+                    y + (item.btn.Height - item.pic.Height) / 2);
+
+                y += gap;
+            }
         }
 
 

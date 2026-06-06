@@ -29,6 +29,7 @@ namespace FacultyWorkloadSystem.Forms
             object sender, EventArgs e)
         {
             SetupGrid();
+            ApplyRoleRestrictions();
             LoadAssignmentCombo();
             LoadTimeSlotCombo();
             LoadFilterCombos();
@@ -239,8 +240,7 @@ namespace FacultyWorkloadSystem.Forms
                 new DataGridViewTextBoxColumn
                 {
                     Name = "colId",
-                    HeaderText = "ID",
-                    Width = 50,
+                    Visible = false,
                     ReadOnly = true
                 });
 
@@ -354,7 +354,11 @@ namespace FacultyWorkloadSystem.Forms
             try
             {
                 List<Timetable> list =
-                    TimetableDAL.GetAll();
+                    SessionManager.IsFaculty
+                    ? TimetableDAL.GetByEmpId(
+                        SessionManager.EmpId.Value)
+                    : TimetableDAL.GetAll();
+
                 PopulateGrid(list);
             }
             catch (Exception ex)
@@ -456,7 +460,9 @@ namespace FacultyWorkloadSystem.Forms
         private void btnSave_Click(
             object sender, EventArgs e)
         {
+            if (SessionManager.IsFaculty) return;
             if (!ValidateInputs()) return;
+
 
             try
             {
@@ -651,6 +657,8 @@ namespace FacultyWorkloadSystem.Forms
 
         private void DeleteEntry(int ttId)
         {
+            if (SessionManager.IsFaculty) return;
+
             if (!ValidationHelper.Confirm(
                 "Delete this timetable entry?\n" +
                 "Workload hours will be " +
@@ -698,11 +706,13 @@ namespace FacultyWorkloadSystem.Forms
                         cboFilterSemester
                         .SelectedValue);
 
-                int empId = cboFilterFaculty
-                    .SelectedIndex < 0 ? 0
-                    : Convert.ToInt32(
-                        cboFilterFaculty
-                        .SelectedValue);
+                // Faculty always filtered to themselves
+                int empId = SessionManager.IsFaculty
+                    ? SessionManager.EmpId.Value
+                    : (cboFilterFaculty.SelectedIndex < 0
+                        ? 0
+                        : Convert.ToInt32(
+                            cboFilterFaculty.SelectedValue));
 
                 string day =
                     cboFilterDay.SelectedIndex <= 0
@@ -816,6 +826,31 @@ namespace FacultyWorkloadSystem.Forms
             object sender, MouseEventArgs e)
         {
             _isDragging = false;
+        }
+
+        // ══════════════════════════════════════════════
+        //  ROLE RESTRICTIONS
+        // ══════════════════════════════════════════════
+        private void ApplyRoleRestrictions()
+        {
+            if (!SessionManager.IsFaculty) return;
+
+            // Hide the entire add/edit form panel
+            // (the panel containing assignment combo,
+            // day, slot, room, save, clear buttons)
+            pnlForm.Visible = false;
+
+            // Hide Edit and Delete columns
+            dgvTimetable.Columns["colEdit"].Visible
+                = false;
+            dgvTimetable.Columns["colDelete"].Visible
+                = false;
+
+            // Lock faculty filter to their own name
+            // and hide the faculty filter combo
+            cboFilterFaculty.Enabled = false;
+            lblFaculty.Visible = false;
+            cboFilterFaculty.Visible = false;
         }
     }
 }

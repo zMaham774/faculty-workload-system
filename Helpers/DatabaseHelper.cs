@@ -112,6 +112,28 @@ namespace FacultyWorkloadSystem.Helpers
             }
         }
 
+        // For stored procedures — returns a DataTable
+        public static DataTable ExecuteStoredProcedure(
+            string procedureName,
+            MySqlParameter[] parameters = null)
+        {
+            DataTable dt = new DataTable();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(
+                    procedureName, conn);
+                cmd.CommandType =
+                    CommandType.StoredProcedure;
+                if (parameters != null)
+                    cmd.Parameters.AddRange(parameters);
+                MySqlDataAdapter adapter =
+                    new MySqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            return dt;
+        }
+
     }
 
 }

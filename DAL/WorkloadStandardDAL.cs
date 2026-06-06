@@ -26,7 +26,7 @@ namespace FacultyWorkloadSystem.DAL
                       ON ws.dept_id = d.dept_id
                 JOIN     semesters   s
                       ON ws.sem_id  = s.sem_id
-                ORDER BY ws.ws_id ASC";
+                ORDER BY d.dept_name ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(sql);
             return MapToList(dt);

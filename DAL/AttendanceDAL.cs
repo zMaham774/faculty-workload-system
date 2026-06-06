@@ -9,62 +9,24 @@ namespace FacultyWorkloadSystem.DAL
 {
     public static class AttendanceDAL
     {
-        // ══════════════════════════════════════════════
-        // VIEW — Get faculty + their status for a date
-        // Uses: vw_attendance_daily (with date param)
+        /// ══════════════════════════════════════════════
+        // Get all active faculty with their attendance
+        // status for a given date.
+        // Calls: sp_get_attendance(p_date)
         // ══════════════════════════════════════════════
         public static DataTable GetFacultyForDate(
             DateTime date)
         {
-            // We query the base tables directly
-            // since VIEW uses CURDATE() —
-            // for any date we pass a direct query
-            string sql = @"
-                SELECT
-                    f.emp_id,
-                    f.name              AS faculty_name,
-                    f.emp_type,
-                    d.dept_name,
-                    des.designation_name,
-                    COALESCE(
-                        (SELECT ar.attendance_id
-                         FROM   attendance_records ar
-                         WHERE  ar.emp_id   = f.emp_id
-                           AND  ar.att_date = @date
-                         LIMIT  1), 0
-                    )                   AS att_id,
-                    COALESCE(
-                        (SELECT ar.status
-                         FROM   attendance_records ar
-                         WHERE  ar.emp_id   = f.emp_id
-                           AND  ar.att_date = @date
-                         LIMIT  1), 'Not Marked'
-                    )                   AS att_status,
-                    COALESCE(
-                        (SELECT ar.remarks
-                         FROM   attendance_records ar
-                         WHERE  ar.emp_id   = f.emp_id
-                           AND  ar.att_date = @date
-                         LIMIT  1), ''
-                    )                   AS remarks
-                FROM   faculty      f
-                JOIN   departments  d
-                    ON f.dept_id        = d.dept_id
-                JOIN   designations des
-                    ON f.designation_id =
-                       des.designation_id
-                WHERE  f.is_active = 1
-                ORDER  BY d.dept_name ASC,
-                          f.name      ASC";
-
             var p = new[]
             {
-                new MySqlParameter(
-                    "@date",
-                    date.ToString("yyyy-MM-dd"))
-            };
+        new MySqlParameter(
+            "p_date",
+            date.ToString("yyyy-MM-dd"))
+    };
 
-            return DatabaseHelper.ExecuteQuery(sql, p);
+            return DatabaseHelper
+                .ExecuteStoredProcedure(
+                    "sp_get_attendance", p);
         }
 
         // ══════════════════════════════════════════════
@@ -161,30 +123,42 @@ namespace FacultyWorkloadSystem.DAL
         // ══════════════════════════════════════════════
         public static bool Insert(Attendance a)
         {
+            // Resolve wa_id for this faculty
+            string sqlWa = @"
+        SELECT wa_id
+        FROM   workload_assignments
+        WHERE  emp_id = @empId
+        LIMIT  1";
+
+            var pw = new[]
+            {
+        new MySqlParameter("@empId", a.EmpId)
+    };
+
+            object waResult =
+                DatabaseHelper.ExecuteScalar(sqlWa, pw);
+            object waId = (waResult != null)
+                            ? waResult
+                            : (object)DBNull.Value;
+
             string sql = @"
-                INSERT INTO attendance_records
-                    (emp_id,    att_date,
-                     status,    remarks,
-                     marked_by, marked_on)
-                VALUES
-                    (@empId,    @date,
-                     @status,   @remarks,
-                     @markedBy, NOW())";
+        INSERT INTO attendance_records
+            (wa_id,   att_date,
+             slot_id, cal_id,
+             status,  remarks)
+        VALUES
+            (@waId,  @date,
+             NULL,   NULL,
+             @status, @remarks)";
 
             var p = new[]
             {
-                new MySqlParameter(
-                    "@empId",    a.EmpId),
-                new MySqlParameter(
-                    "@date",
-                    a.AttDate.ToString("yyyy-MM-dd")),
-                new MySqlParameter(
-                    "@status",   a.Status),
-                new MySqlParameter(
-                    "@remarks",  a.Remarks ?? ""),
-                new MySqlParameter(
-                    "@markedBy", a.MarkedBy)
-            };
+        new MySqlParameter("@waId",    waId),
+        new MySqlParameter("@date",
+            a.AttDate.ToString("yyyy-MM-dd")),
+        new MySqlParameter("@status",  a.Status),
+        new MySqlParameter("@remarks", a.Remarks ?? "")
+    };
 
             return DatabaseHelper
                 .ExecuteNonQuery(sql, p) > 0;
@@ -196,24 +170,20 @@ namespace FacultyWorkloadSystem.DAL
         public static bool Update(Attendance a)
         {
             string sql = @"
-                UPDATE attendance_records
-                SET    status     = @status,
-                       remarks    = @remarks,
-                       marked_by  = @markedBy,
-                       marked_on  = NOW()
-                WHERE  attendance_id = @id";
+        UPDATE attendance_records
+        SET    status  = @status,
+               remarks = @remarks
+        WHERE  ar_id   = @id";
 
             var p = new[]
             {
-                new MySqlParameter(
-                    "@status",   a.Status),
-                new MySqlParameter(
-                    "@remarks",  a.Remarks ?? ""),
-                new MySqlParameter(
-                    "@markedBy", a.MarkedBy),
-                new MySqlParameter(
-                    "@id",       a.AttendanceId)
-            };
+        new MySqlParameter("@status",
+            a.Status),
+        new MySqlParameter("@remarks",
+            a.Remarks ?? ""),
+        new MySqlParameter("@id",
+            a.AttendanceId)
+    };
 
             return DatabaseHelper
                 .ExecuteNonQuery(sql, p) > 0;
@@ -226,21 +196,28 @@ namespace FacultyWorkloadSystem.DAL
             DateTime date, int markedBy)
         {
             // Get faculty not yet marked
+            // checking via workload_assignments join
             string sqlFac = @"
-                SELECT emp_id
-                FROM   faculty
-                WHERE  is_active = 1
-                  AND  emp_id NOT IN
-                    (SELECT emp_id
-                     FROM   attendance_records
-                     WHERE  att_date = @date)";
+        SELECT f.emp_id,
+               (SELECT wa.wa_id
+                FROM   workload_assignments wa
+                WHERE  wa.emp_id = f.emp_id
+                LIMIT  1)       AS wa_id
+        FROM   faculty f
+        WHERE  f.is_active = 1
+          AND  f.emp_id NOT IN
+            (SELECT wa2.emp_id
+             FROM   attendance_records ar
+             JOIN   workload_assignments wa2
+                 ON ar.wa_id    = wa2.wa_id
+             WHERE  ar.att_date = @date)";
 
             var pf = new[]
             {
-                new MySqlParameter(
-                    "@date",
-                    date.ToString("yyyy-MM-dd"))
-            };
+        new MySqlParameter(
+            "@date",
+            date.ToString("yyyy-MM-dd"))
+    };
 
             DataTable dt =
                 DatabaseHelper.ExecuteQuery(sqlFac, pf);
@@ -248,33 +225,30 @@ namespace FacultyWorkloadSystem.DAL
             if (dt.Rows.Count == 0) return 0;
 
             var queries = new List<string>();
-            var pars =
-                new List<MySqlParameter[]>();
+            var pars = new List<MySqlParameter[]>();
 
             foreach (DataRow row in dt.Rows)
             {
                 queries.Add(@"
-                    INSERT INTO attendance_records
-                        (emp_id,  att_date,
-                         status,  remarks,
-                         marked_by, marked_on)
-                    VALUES
-                        (@empId, @date,
-                         'Present', '',
-                         @markedBy, NOW())");
+            INSERT INTO attendance_records
+                (wa_id,   att_date,
+                 slot_id, cal_id,
+                 status,  remarks)
+            VALUES
+                (@waId,  @date,
+                 NULL,   NULL,
+                 'Present', '')");
 
                 pars.Add(new[]
                 {
-                    new MySqlParameter(
-                        "@empId",
-                        Convert.ToInt32(
-                            row["emp_id"])),
-                    new MySqlParameter(
-                        "@date",
-                        date.ToString("yyyy-MM-dd")),
-                    new MySqlParameter(
-                        "@markedBy", markedBy)
-                });
+            new MySqlParameter("@waId",
+                row["wa_id"] == DBNull.Value
+                    ? (object)DBNull.Value
+                    : Convert.ToInt32(
+                        row["wa_id"])),
+            new MySqlParameter("@date",
+                date.ToString("yyyy-MM-dd"))
+        });
             }
 
             bool ok = DatabaseHelper
@@ -283,6 +257,64 @@ namespace FacultyWorkloadSystem.DAL
                     pars.ToArray());
 
             return ok ? dt.Rows.Count : 0;
+        }
+
+        // ══════════════════════════════════════════════
+        // Get single faculty attendance for a date
+        // Used when role = Faculty (view only)
+        // ══════════════════════════════════════════════
+        public static DataTable GetFacultyOwnAttendance(int empId, DateTime date)
+        {
+            string sql = @"
+        SELECT
+            f.emp_id,
+            f.name              AS faculty_name,
+            d.dept_name,
+            des.designation_name,
+            f.emp_type,
+            COALESCE(
+                (SELECT ar.ar_id
+                 FROM   attendance_records ar
+                 JOIN   workload_assignments wa
+                     ON ar.wa_id = wa.wa_id
+                 WHERE  wa.emp_id   = f.emp_id
+                   AND  ar.att_date = @date
+                 LIMIT  1), 0
+            )                   AS att_id,
+            COALESCE(
+                (SELECT ar.status
+                 FROM   attendance_records ar
+                 JOIN   workload_assignments wa
+                     ON ar.wa_id = wa.wa_id
+                 WHERE  wa.emp_id   = f.emp_id
+                   AND  ar.att_date = @date
+                 LIMIT  1), 'Not Marked'
+            )                   AS att_status,
+            COALESCE(
+                (SELECT ar.remarks
+                 FROM   attendance_records ar
+                 JOIN   workload_assignments wa
+                     ON ar.wa_id = wa.wa_id
+                 WHERE  wa.emp_id   = f.emp_id
+                   AND  ar.att_date = @date
+                 LIMIT  1), ''
+            )                   AS remarks
+        FROM   faculty      f
+        JOIN   departments  d
+            ON f.dept_id        = d.dept_id
+        JOIN   designations des
+            ON f.designation_id = des.designation_id
+        WHERE  f.is_active = 1
+          AND  f.emp_id    = @empId";
+
+            var p = new[]
+            {
+        new MySqlParameter("@empId", empId),
+        new MySqlParameter("@date",
+            date.ToString("yyyy-MM-dd"))
+    };
+
+            return DatabaseHelper.ExecuteQuery(sql, p);
         }
     }
 }

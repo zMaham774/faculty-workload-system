@@ -25,8 +25,8 @@ namespace FacultyWorkloadSystem.Forms
             object sender, EventArgs e)
         {
             SetupGrid();
+            ApplyRoleRestrictions();
             dtpDate.Value = DateTime.Today;
-        
             RefreshForDate(DateTime.Today);
         }
 
@@ -90,9 +90,7 @@ namespace FacultyWorkloadSystem.Forms
             {
                 dgvAttendance.Rows.Clear();
 
-                DataTable dt =
-                    AttendanceDAL
-                    .GetFacultyForDate(date);
+                DataTable dt = SessionManager.IsFaculty ? AttendanceDAL.GetFacultyOwnAttendance(SessionManager.EmpId.Value, date) : AttendanceDAL.GetFacultyForDate(date);
 
                 if (dt == null ||
                     dt.Rows.Count == 0)
@@ -373,6 +371,8 @@ namespace FacultyWorkloadSystem.Forms
         private void btnMarkAll_Click(
             object sender, EventArgs e)
         {
+            if (SessionManager.IsFaculty) return;
+
             if (!ValidationHelper.Confirm(
                 "Mark all unmarked faculty as " +
                 "Present for " +
@@ -413,6 +413,8 @@ namespace FacultyWorkloadSystem.Forms
             object sender, EventArgs e)
         {
             int saved = 0, failed = 0;
+
+            if (SessionManager.IsFaculty) return;
 
             for (int i = 0;
                  i < dgvAttendance.Rows.Count;
@@ -534,6 +536,14 @@ namespace FacultyWorkloadSystem.Forms
                         break;
                 }
             }
+            if (e.ColumnIndex == saveI)
+            {
+                e.CellStyle.BackColor = Color.FromArgb(33, 145, 245);
+                e.CellStyle.ForeColor = Color.White;
+                e.CellStyle.SelectionBackColor = Color.FromArgb(10, 100, 200);
+                e.CellStyle.SelectionForeColor = Color.White;
+                e.FormattingApplied = true;
+            }
         }
 
         // ══════════════════════════════════════════════
@@ -622,6 +632,34 @@ namespace FacultyWorkloadSystem.Forms
             object sender, MouseEventArgs e)
         {
             _isDragging = false;
+        }
+
+        // ══════════════════════════════════════════════
+        //  ROLE RESTRICTIONS
+        // ══════════════════════════════════════════════
+        private void ApplyRoleRestrictions()
+        {
+            if (!SessionManager.IsFaculty) return;
+
+            // Hide action buttons
+            btnMarkAll.Visible = false;
+            btnSaveAll.Visible = false;
+
+            // Hide Save column
+            dgvAttendance.Columns["colSave"].Visible
+                = false;
+
+            // Make Status read-only
+            dgvAttendance.Columns["colStatus"].ReadOnly
+                = true;
+
+            // Make Remarks read-only
+            dgvAttendance.Columns["colRemarks"].ReadOnly
+                = true;
+
+            // Lock date picker — faculty views
+            // any date but cannot mark
+            dtpDate.Enabled = true; // can browse dates
         }
     }
 }

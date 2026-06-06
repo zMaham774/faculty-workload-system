@@ -16,7 +16,7 @@ namespace FacultyWorkloadSystem.DAL
                                     hod_name, contact, 
                                     email, is_active
                              FROM   departments
-                             ORDER  BY dept_id ASC";
+                             ORDER  BY dept_name ASC";
 
             DataTable dt = DatabaseHelper.ExecuteQuery(query);
             return MapToList(dt);

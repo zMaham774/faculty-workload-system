@@ -119,8 +119,7 @@ namespace FacultyWorkloadSystem.Forms
                 new DataGridViewTextBoxColumn
                 {
                     Name = "colId",
-                    HeaderText = "ID",
-                    Width = 50,
+                    Visible = false,
                     ReadOnly = true
                 });
 

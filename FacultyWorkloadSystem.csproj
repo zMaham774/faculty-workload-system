@@ -231,6 +231,9 @@
     <EmbeddedResource Include="Forms\AcademicCalendarForm.resx">
       <DependentUpon>AcademicCalendarForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AttendanceForm.resx">
+      <DependentUpon>AttendanceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CourseForm.resx">
       <DependentUpon>CourseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -242,6 +245,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FacultyForm.resx">
       <DependentUpon>FacultyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LeaveApprovalForm.resx">
+      <DependentUpon>LeaveApprovalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LeaveRequestForm.resx">
+      <DependentUpon>LeaveRequestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

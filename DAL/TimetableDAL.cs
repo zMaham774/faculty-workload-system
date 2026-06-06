@@ -477,5 +477,58 @@ namespace FacultyWorkloadSystem.DAL
                     row["conflict_flag"])
             );
         }
+
+        // ══════════════════════════════════════════════
+        // Get timetable entries for a specific faculty
+        // Used when role = Faculty (view only)
+        // ══════════════════════════════════════════════
+        public static List<Timetable> GetByEmpId(int empId)
+        {
+            string sql = @"
+        SELECT   tt.tt_id,
+                 tt.wa_id,
+                 f.name       AS faculty_name,
+                 c.title      AS course_title,
+                 c.course_code,
+                 s.sem_name,
+                 s.sem_id,
+                 f.emp_id,
+                 d.dept_name,
+                 tt.day_of_week,
+                 tt.slot_id,
+                 ts.slot_label,
+                 tt.room,
+                 tt.conflict_flag
+        FROM     timetable            tt
+        JOIN     workload_assignments wa
+              ON tt.wa_id     = wa.wa_id
+        JOIN     faculty              f
+              ON wa.emp_id    = f.emp_id
+        JOIN     courses              c
+              ON wa.course_id = c.course_id
+        JOIN     semesters            s
+              ON wa.sem_id    = s.sem_id
+        JOIN     departments          d
+              ON f.dept_id    = d.dept_id
+        JOIN     time_slots           ts
+              ON tt.slot_id   = ts.slot_id
+        WHERE    f.emp_id     = @empId
+        ORDER BY s.sem_name    ASC,
+                 tt.day_of_week ASC,
+                 ts.start_time  ASC";
+
+            var p = new[]
+            {
+        new MySqlParameter("@empId", empId)
+    };
+
+            DataTable dt = DatabaseHelper.ExecuteQuery(sql, p);
+
+            var list = new List<Timetable>();
+            foreach (DataRow row in dt.Rows)
+                list.Add(MapToObject(row));
+
+            return list;
+        }
     }
 }
