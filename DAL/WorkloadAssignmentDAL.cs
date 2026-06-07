@@ -296,7 +296,7 @@ namespace FacultyWorkloadSystem.DAL
         {
             string sql = @"
         UPDATE workload_assignments
-        SET    is_deleted = 1
+        SET    is_deleted = 1, status = 'Inactive'
         WHERE  wa_id      = @waId";
 
             var p = new[]

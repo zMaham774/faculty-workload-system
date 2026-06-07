@@ -251,20 +251,17 @@ namespace FacultyWorkloadSystem.Forms
                     ReadOnly = true
                 });
 
-            dgvRequests.Columns.Add(
-                new DataGridViewButtonColumn
-                {
+            dgvRequests.Columns.Add(new DataGridViewButtonColumn
+            {
                     Name = "colCancel",
                     HeaderText = "Action",
-                    Text = "Cancel",
-                    UseColumnTextForButtonValue = true,
+                    UseColumnTextForButtonValue = false, 
                     Width = 90,
                     FlatStyle = FlatStyle.Flat,
                     DefaultCellStyle = {
-                        BackColor =
-                            Color.FromArgb(220,53,69),
-                        ForeColor = Color.White }
-                });
+                    BackColor = Color.FromArgb(220, 53, 69),
+                    ForeColor = Color.White }
+            });
 
             // ── Balance grid ───────────────────────────
             dgvBalance.Columns.Clear();
@@ -343,8 +340,7 @@ namespace FacultyWorkloadSystem.Forms
             }
         }
 
-        private void PopulateGrid(
-            List<LeaveRequest> list)
+        private void PopulateGrid(List<LeaveRequest> list)
         {
             dgvRequests.Rows.Clear();
             foreach (LeaveRequest lr in list)
@@ -352,18 +348,36 @@ namespace FacultyWorkloadSystem.Forms
                 int idx = dgvRequests.Rows.Add(
                     lr.RequestId,
                     lr.LeaveTypeName,
-                    lr.FromDate.ToString(
-                        "dd MMM yyyy"),
-                    lr.ToDate.ToString(
-                        "dd MMM yyyy"),
+                    lr.FromDate.ToString("dd MMM yyyy"),
+                    lr.ToDate.ToString("dd MMM yyyy"),
                     lr.TotalDays,
                     lr.Reason,
                     lr.Status,
                     lr.ApprovalRemarks ?? "—",
-                    lr.AppliedOn.ToString(
-                        "dd MMM yyyy"));
+                    lr.AppliedOn.ToString("dd MMM yyyy"));
 
                 ColorStatusRow(idx, lr.Status);
+
+                // Set Cancel button per row based on status
+                var cancelCell = dgvRequests
+                    .Rows[idx].Cells["colCancel"];
+
+                if (lr.Status == "Pending")
+                {
+                    cancelCell.Value = "Cancel";
+                    cancelCell.Style.BackColor = Color.FromArgb(220, 53, 69);
+                    cancelCell.Style.ForeColor = Color.White;
+                    cancelCell.Style.SelectionBackColor = Color.FromArgb(180, 30, 50);
+                    cancelCell.Style.SelectionForeColor = Color.White;
+                }
+                else
+                {
+                    cancelCell.Value = "";
+                    cancelCell.Style.BackColor = Color.FromArgb(240, 240, 240);
+                    cancelCell.Style.ForeColor = Color.FromArgb(240, 240, 240);
+                    cancelCell.Style.SelectionBackColor = Color.FromArgb(220, 230, 242);
+                    cancelCell.Style.SelectionForeColor = Color.FromArgb(220, 230, 242);
+                }
             }
         }
 
@@ -647,6 +661,43 @@ namespace FacultyWorkloadSystem.Forms
             object sender, MouseEventArgs e)
         {
             _isDragging = false;
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            LoadBalancePanel();
+        }
+
+        private void dgvRequests_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            if (e.ColumnIndex ==
+                dgvRequests.Columns["colCancel"].Index)
+            {
+                string status = dgvRequests
+                    .Rows[e.RowIndex]
+                    .Cells["colStatus"]
+                    .Value?.ToString() ?? "";
+
+                if (status == "Pending")
+                {
+                    e.CellStyle.BackColor = Color.FromArgb(220, 53, 69);
+                    e.CellStyle.ForeColor = Color.White;
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(180, 30, 50);
+                    e.CellStyle.SelectionForeColor = Color.White;
+                }
+                else
+                {
+                    e.CellStyle.BackColor = Color.FromArgb(240, 240, 240);
+                    e.CellStyle.ForeColor = Color.FromArgb(240, 240, 240);
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(240, 240, 240);
+                    e.CellStyle.SelectionForeColor = Color.FromArgb(240, 240, 240);
+                }
+
+                e.FormattingApplied = true;
+            }
         }
     }
 }

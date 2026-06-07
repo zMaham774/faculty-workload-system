@@ -565,11 +565,13 @@ namespace FacultyWorkloadSystem.Forms
             this.Show();
         }
 
-        private void btnReports_Click(
-            object s, EventArgs e) =>
-            MessageBox.Show("Reports — Coming Soon",
-                "Info", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            ReportsForm reportsForm = new ReportsForm();
+            this.Hide();
+            reportsForm.ShowDialog();
+            this.Show();
+        }
 
         private void btnUsers_Click(object sender, EventArgs e)
         {

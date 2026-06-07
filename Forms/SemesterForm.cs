@@ -442,6 +442,16 @@ namespace FacultyWorkloadSystem.Forms
 
         private void DeleteSemester(int id)
         {
+            Semester s = SemesterDAL.GetById(id);
+
+            if (s.IsCurrent)
+            {
+                ValidationHelper.ShowError(
+                    "Cannot delete the active semester.\n" +
+                    "Set another semester as current first.");
+                return;
+            }
+
             if (SemesterDAL.HasAssignments(id))
             {
                 ValidationHelper.ShowError(

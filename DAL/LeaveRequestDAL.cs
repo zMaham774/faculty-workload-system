@@ -282,13 +282,13 @@ namespace FacultyWorkloadSystem.DAL
         LEFT   JOIN leave_balances lb
             ON lb.lt_id    = lt.lt_id
            AND lb.emp_id   = @empId
-           AND lb.acad_year = @year
+           AND lb.acad_year LIKE @year
         ORDER  BY lt.lt_name ASC";
 
             var p = new[]
             {
         new MySqlParameter("@empId", empId),
-        new MySqlParameter("@year",  year.ToString())
+        new MySqlParameter("@year",  year.ToString() + "%") // "2026%" matches "2026-2027"
     };
 
             return DatabaseHelper.ExecuteQuery(sql, p);

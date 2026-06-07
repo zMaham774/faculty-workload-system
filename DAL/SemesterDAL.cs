@@ -131,7 +131,7 @@ namespace FacultyWorkloadSystem.DAL
             string sql = @"
         UPDATE semesters
         SET    is_deleted = 1
-        WHERE  sem_id     = @semId";
+        WHERE  sem_id     = @id";
 
             var p = new[]
             {

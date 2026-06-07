@@ -79,7 +79,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(1340, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1340, 36);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -96,7 +96,7 @@
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 32);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // menuMaximize
@@ -155,7 +155,7 @@
             this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.gradientPanel1.gradientBottom = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(145)))), ((int)(((byte)(245)))));
             this.gradientPanel1.gradientTop = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            this.gradientPanel1.Location = new System.Drawing.Point(0, 33);
+            this.gradientPanel1.Location = new System.Drawing.Point(0, 36);
             this.gradientPanel1.MaximumSize = new System.Drawing.Size(0, 60);
             this.gradientPanel1.Name = "gradientPanel1";
             this.gradientPanel1.Size = new System.Drawing.Size(1340, 60);

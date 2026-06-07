@@ -28,7 +28,6 @@
             this.toolStripSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gradientPanel1 = new FacultyWorkloadSystem.Helpers.GradientPanel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.pnlForm = new System.Windows.Forms.Panel();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.lblLeaveType = new System.Windows.Forms.Label();
@@ -50,8 +49,8 @@
             this.pnlGridHeader = new System.Windows.Forms.Panel();
             this.lblGridTitle = new System.Windows.Forms.Label();
             this.dgvRequests = new System.Windows.Forms.DataGridView();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
-            this.gradientPanel1.SuspendLayout();
             this.pnlForm.SuspendLayout();
             this.pnlBalance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBalance)).BeginInit();
@@ -69,7 +68,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(1340, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1340, 36);
             this.menuStrip1.TabIndex = 0;
             // 
             // fileToolStripMenuItem
@@ -85,7 +84,7 @@
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 32);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // menuMaximize
@@ -128,11 +127,10 @@
             // 
             // gradientPanel1
             // 
-            this.gradientPanel1.Controls.Add(this.lblTitle);
             this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.gradientPanel1.gradientBottom = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(145)))), ((int)(((byte)(245)))));
             this.gradientPanel1.gradientTop = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(74)))), ((int)(((byte)(158)))));
-            this.gradientPanel1.Location = new System.Drawing.Point(0, 33);
+            this.gradientPanel1.Location = new System.Drawing.Point(0, 36);
             this.gradientPanel1.MaximumSize = new System.Drawing.Size(0, 60);
             this.gradientPanel1.Name = "gradientPanel1";
             this.gradientPanel1.Size = new System.Drawing.Size(1340, 60);
@@ -140,18 +138,6 @@
             this.gradientPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseDown);
             this.gradientPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseMove);
             this.gradientPanel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gradientPanel1_MouseUp);
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(430, 12);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(439, 38);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "LEAVE REQUEST MANAGEMENT";
             // 
             // pnlForm
             // 
@@ -171,7 +157,7 @@
             this.pnlForm.Controls.Add(this.btnClear);
             this.pnlForm.Location = new System.Drawing.Point(0, 96);
             this.pnlForm.Name = "pnlForm";
-            this.pnlForm.Size = new System.Drawing.Size(900, 290);
+            this.pnlForm.Size = new System.Drawing.Size(869, 290);
             this.pnlForm.TabIndex = 2;
             // 
             // lblFormTitle
@@ -332,7 +318,7 @@
             this.pnlBalance.Controls.Add(this.lblBalanceTitle);
             this.pnlBalance.Controls.Add(this.dgvBalance);
             this.pnlBalance.Controls.Add(this.lblBalanceNote);
-            this.pnlBalance.Location = new System.Drawing.Point(904, 96);
+            this.pnlBalance.Location = new System.Drawing.Point(880, 96);
             this.pnlBalance.Name = "pnlBalance";
             this.pnlBalance.Size = new System.Drawing.Size(436, 290);
             this.pnlBalance.TabIndex = 3;
@@ -421,6 +407,19 @@
             this.dgvRequests.Size = new System.Drawing.Size(1340, 337);
             this.dgvRequests.TabIndex = 5;
             this.dgvRequests.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRequests_CellClick);
+            this.dgvRequests.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvRequests_CellFormatting);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(430, 12);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(439, 38);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "LEAVE REQUEST MANAGEMENT";
             // 
             // LeaveRequestForm
             // 
@@ -441,8 +440,6 @@
             this.Load += new System.EventHandler(this.LeaveRequestForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.gradientPanel1.ResumeLayout(false);
-            this.gradientPanel1.PerformLayout();
             this.pnlForm.ResumeLayout(false);
             this.pnlForm.PerformLayout();
             this.pnlBalance.ResumeLayout(false);
